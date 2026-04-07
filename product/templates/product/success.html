@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Pagesa{% endblock %}
+
+{% block content %}
+<style>
+    .success-container {
+        max-width: 500px;
+        margin: 80px auto;
+        padding: 40px;
+        text-align: center;
+        border-radius: 12px;
+        background-color: #ffffff;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .success-icon {
+        font-size: 60px;
+        color: #28a745;
+        margin-bottom: 20px;
+    }
+
+    .success-title {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .success-text {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 30px;
+    }
+
+    .home-btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+    .home-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="success-container">
+    <div class="success-icon">
+        <i class="fa fa-check-circle"></i>
+    </div>
+
+    <div class="success-title">
+        Porosia u krye me sukses!
+    </div>
+
+    <div class="success-text">
+        Faleminderit për blerjen tuaj. Porosia juaj është duke u procesuar.
+    </div>
+
+    <a href="{% url 'home' %}" class="home-btn">
+        Kthehu në Home
+    </a>
+</div>
+
+{% endblock %}
+
+{% block banner %}{% endblock %}
+{% block sidebar %}{% endblock %}
+{% block side %}{% endblock %}

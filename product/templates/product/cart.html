@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% block title %}Shporta Juaj{% endblock %}
+
+{% block content %}
+<style>
+/* SHPORTA */
+.cart-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+}
+
+.cart-container h1 {
+  text-align: center;
+  color: #0077b6;
+  margin-bottom: 30px;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 25px;
+}
+
+.cart-table th, .cart-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.cart-table th {
+  background: #f9fbfd;
+  color: #333;
+}
+
+.cart-table td img {
+  border-radius: 8px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.price-old {
+  text-decoration: line-through;
+  color: #999;
+  margin-right: 5px;
+}
+
+.price-new {
+  color: #0077b6;
+  font-weight: bold;
+}
+
+.cart-actions a {
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-right: 5px;
+  transition: all 0.3s ease;
+}
+
+.cart-actions .btn-secondary {
+  background: #e9f2ff;
+  color: #0077b6;
+}
+
+.cart-actions .btn-secondary:hover {
+  background: #0077b6;
+  color: #fff;
+}
+
+.cart-actions .btn-danger {
+  background: #ef4444;
+  color: #fff;
+}
+
+.cart-actions .btn-danger:hover {
+  background: #c30000;
+}
+
+.total-price {
+  text-align: right;
+  font-size: 18px;
+  font-weight: bold;
+  color: #0077b6;
+  margin-bottom: 25px;
+}
+
+/* BUTONAT POSHT */
+.cart-buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cart-buttons a {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.cart-buttons .btn-home {
+  background: #e9f2ff;
+  color: #0077b6;
+}
+
+.cart-buttons .btn-home:hover {
+  background: #0077b6;
+  color: #fff;
+}
+
+.cart-buttons .btn-checkout {
+  background: #0077b6;
+  color: #fff;
+}
+
+.cart-buttons .btn-checkout:hover {
+  background: #005f8a;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .cart-table th, .cart-table td {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+  .cart-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+</style>
+
+<div class="cart-container">
+  <h1>Shporta Juaj</h1>
+
+  {% if items %}
+  <table class="cart-table">
+      <tr>
+          <th>Produkt</th>
+          <th>Sasia</th>
+          <th>Cmimi</th>
+          <th>Veprime</th>
+      </tr>
+      {% for entry in items %}
+      <tr>
+          <td>
+              {% if entry.item.product.image %}
+              <img src="{{ entry.item.product.image.url }}" alt="{{ entry.item.product.name }}" width="50" height="50">
+              {% else %}
+              <img src="https://via.placeholder.com/50" alt="{{ entry.item.product.name }}">
+              {% endif %}
+              {{ entry.item.product.name }}
+          </td>
+          <td class="cart-actions">
+              <a href="{% url 'decrease_quantity' entry.item.pk %}" class="btn-secondary">-</a>
+              {{ entry.item.quantity }}
+              <a href="{% url 'increase_quantity' entry.item.pk %}" class="btn-secondary">+</a>
+          </td>
+          <td>
+              {% if entry.has_discount %}
+                  <span class="price-old">{{ entry.original_price|floatformat:2 }}€</span>
+                  <span class="price-new">{{ entry.price|floatformat:2 }}€</span>
+              {% else %}
+                  <span>{{ entry.price|floatformat:2 }}€</span>
+              {% endif %}
+          </td>
+          <td class="cart-actions">
+              <a href="{% url 'remove_from_cart' entry.item.pk %}" class="btn-danger">Fshi</a>
+          </td>
+      </tr>
+      {% endfor %}
+  </table>
+
+  <div class="total-price">Total: {{ total|floatformat:2 }}€</div>
+
+  <div class="cart-buttons">
+      <a href="{% url 'home' %}" class="btn-home">Kthehu në Home</a>
+      <a href="{% url 'checkout' %}" class="btn-checkout">Vazhdo me Porosin</a>
+  </div>
+
+  {% else %}
+  <p>Shporta është bosh.</p>
+  <a href="{% url 'home' %}" class="btn-home">Kthehu në Home</a>
+  {% endif %}
+</div>
+{% endblock %}
+{% block banner %}{% endblock %}
+{% block sidebar %}{% endblock %}
+{% block side %}{% endblock %}

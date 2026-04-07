@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% block title %} Supplements {% endblock %}
+
+{% block content %}
+<style>
+    .product-detail {
+        max-width: 600px;
+        margin: 50px auto;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    /* FIX: foto jo me u crop */
+    .product-detail img {
+        width: 100%;
+        height: 300px;
+        object-fit: contain;   /* KJO E RREGULLON */
+        background: #f8f8f8;   /* duket ma bukur kur ka boshllëk */
+        border-radius: 8px;
+    }
+
+    .product-detail h1 {
+        margin-top: 15px;
+        font-size: 26px;
+    }
+
+    .product-detail p {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+
+    .price {
+        font-weight: bold;
+        font-size: 22px;
+    }
+
+    .price-old {
+        text-decoration: line-through;
+        color: #999;
+        margin-right: 10px;
+    }
+
+    .price-new {
+        color: #0077b6;
+    }
+
+    .discount-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: #ef4444;
+        color: #fff;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 6px;
+    }
+
+    .bottom-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    .btn-update {
+        padding: 8px 16px;
+        background-color: #0077b6;
+        color: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s;
+        font-size: 14px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .btn-update:hover {
+        background-color: #2980b9;
+    }
+
+    .btn-delete {
+        padding: 8px 16px;
+        background-color: #c0392b;
+        color: #fff;
+        border-radius: 8px;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        transition: background 0.3s;
+        font-size: 14px;
+        border: none;
+    }
+
+    .btn-delete:hover {
+        background-color: #992d22;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-out {
+        padding: 8px 16px;
+        background-color: #e74c3c;
+        color: #fff;
+        border-radius: 8px;
+        font-weight: bold;
+        border: none;
+        cursor: not-allowed;
+        font-size: 14px;
+        opacity: 0.7;
+    }
+
+</style>
+
+<div class="product-detail">
+    {% if product.discount_percent %}
+        <span class="discount-badge">-{{ product.discount_percent }}%</span>
+    {% endif %}
+
+    {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    {% else %}
+        <img src="https://via.placeholder.com/600x300">
+    {% endif %}
+
+    <h1>{{ product.name }}</h1>
+    <p class="category"><strong>Category:</strong> {{ product.category }}</p>
+    <p class="brand"><strong>Brand:</strong> {{ product.brand }}</p>
+    <p class="description">{{ product.description }}</p>
+
+    <p class="price">
+        {% if product.discount_percent %}
+            <span class="price-old">{{ product.price }}€</span>
+            <span class="price-new">{{ product.get_discount_price }}€</span>
+        {% else %}
+            {{ product.price }}€
+        {% endif %}
+    </p>
+
+    <p class="weight"><strong>Weight:</strong> {{ product.weight }}Kg</p>
+    <p class="flavor"><strong>Flavor:</strong> {{ product.flavor }}</p>
+    <p class="stock"><strong>Stock:</strong> {{ product.stock }}</p>
+
+<div class="bottom-row">
+    <p class="created">
+        <strong>Added on:</strong> {{ product.created_at|date:"d M Y" }}
+    </p>
+
+    <div class="btn-group">
+
+        {% if is_admin %}
+            <a href="{% url 'update_product' product.pk %}" class="btn-update">Update</a>
+            <button id="deleteBtn" class="btn-delete">Delete Product</button>
+        {% endif %}
+
+        {% if product.stock > 0 %}
+            <a href="{% url 'add_to_cart' product.pk %}" class="btn-update">Add to Cart</a>
+        {% else %}
+            <button disabled class="btn-out">
+                Out of Stock
+            </button>
+        {% endif %}
+
+    </div>
+</div>
+</div>
+
+{% if is_admin %}
+<div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+  <div style="background:#fff; padding:30px; border-radius:12px; text-align:center; width:300px; position:relative;">
+    <h3>Are you sure?</h3>
+    <p>You are about to delete {{ product.name }}.</p>
+
+    <form method="POST" action="{% url 'delete_product' product.pk %}">
+      {% csrf_token %}
+      <button type="submit" style="background:#0077b6;color:#fff;padding:10px 15px;border:none;border-radius:6px;cursor:pointer;">Yes, Delete</button>
+      <button type="button" id="cancelBtn" style="background:#ccc;color:#333;padding:10px 15px;border:none;border-radius:6px;cursor:pointer;margin-left:10px;">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const deleteBtn = document.getElementById('deleteBtn');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const modal = document.getElementById('deleteModal');
+
+  if(deleteBtn){
+    deleteBtn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+    });
+  }
+
+  if(cancelBtn){
+    cancelBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+  }
+
+  window.addEventListener('click', (e) => {
+    if(e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>
+{% endif %}
+
+{% endblock %}
+{% block banner %}{% endblock %}
