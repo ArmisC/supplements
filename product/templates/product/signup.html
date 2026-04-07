@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sign Up - MusclePower.ks</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p0R7wOG1wZL+p5C3E+Ch8s5g5t1yI4fYr1D+5H6EjB6R1Z0y9NnJq5tJ3Xe7wB+N5n1lDdU7NfXzK6kE6YqjMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f9fbfd;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.signup-container {
+  background: #ffffff;
+  padding: 40px 35px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  width: 400px;
+  text-align: center;
+}
+
+.signup-container h2 {
+  margin-bottom: 25px;
+  color: #0077b6; /* Ngjyra e logo/navbar */
+}
+
+.signup-container input[type="text"],
+.signup-container input[type="email"],
+.signup-container input[type="password"] {
+  width: 90%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.signup-container input:focus {
+  border-color: #0077b6;
+  outline: none;
+}
+
+.signup-container .btn-signup {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #0077b6;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.signup-container .btn-signup:hover {
+  background-color: #005f8a;
+}
+
+.signup-container .login-link {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.signup-container .login-link a {
+  color: #0077b6;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.signup-container .login-link a:hover {
+  color: #005f8a;
+}
+</style>
+</head>
+<body>
+
+<div class="signup-container">
+  <h2>Sign Up</h2>
+    <form method="POST" action="{% url 'signup' %}" method="POST">
+    {% csrf_token %}
+
+    <input type="email" name="email" placeholder="Email" required>
+      {% if email_error %}
+<li style="color: red">{{ email_error }}</li>
+{% endif %}
+    <input type="password" name="password1" placeholder="Password" required>
+    <input type="password" name="password2" placeholder="Confirm Password" required>
+      {% if password_error %}
+<li style="color: red">{{ password_error }}</li>
+{% endif %}
+    <button type="submit" class="btn-signup">Sign Up</button>
+  </form>
+  <div class="login-link">
+    Already have an account? <a href="{% url 'login' %}">Login</a>
+  </div>
+</div>
+
+</body>
+</html>
