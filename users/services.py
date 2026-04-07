@@ -23,7 +23,4 @@ def create_anonymous_user(request):
             "logged_in": True,
         }
     )
-    print('------------------')
-    print(user, created, user.logged_in)
-    print('------------------')
     return user
