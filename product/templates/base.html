@@ -394,6 +394,26 @@ body {
 .cart-icon img:hover {
   transform: scale(1.4);
 }
+.cart-icon {
+  position: relative;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff3b3b;   /* e kuqe */
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    width: 18px;           /* gjerësia fikse */
+    height: 18px;          /* lartësia fikse */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;    /* bën circle */
+    box-shadow: 0 0 2px rgba(0,0,0,0.3);
+}
 
 
 </style>
@@ -423,7 +443,11 @@ body {
     <div class="user-controls">
         <span class="user-email">{{ request.session.user.email }}</span>
         <a href="{% url 'users:logout' request.session.user.pk %}" class="btn-login">Logout</a>
-        <a href="{% url 'cart' %}" class="cart-icon"><img src="/media/products/2a.png" alt="Cart"></a>
+        <a href="{% url 'cart' %}" class="cart-icon"><img src="/media/products/2a.png" alt="Cart">
+            {% if cart_count > 0 %}
+                <span class="cart-badge">{{ cart_count }}</span>
+            {% endif %}
+        </a>
 
     </div>
 
@@ -431,7 +455,11 @@ body {
     <div class="user-controls">
 
     <a href="{% url 'users:login' %}" class="btn-login">Login</a>
-    <a href="{% url 'cart' %}" class="cart-icon"><img src="/media/products/2a.png" alt="Cart"></a>
+    <a href="{% url 'cart' %}" class="cart-icon"><img src="/media/products/2a.png" alt="Cart">
+            {% if cart_count > 0 %}
+                <span class="cart-badge">{{ cart_count }}</span>
+            {% endif %}
+        </a>
     {% endif %}
 </div>
 </div>

@@ -266,7 +266,7 @@ def checkout(request):
         country = request.POST.get('country')
         city = request.POST.get('city')
 
-        with transaction.atomic():  # 🔒 siguri
+        with transaction.atomic():
             total = 0
 
             order = Order.objects.create(
@@ -343,6 +343,8 @@ def delete_order(request, order_id):
 
 def success(request):
     return render(request, 'product/success.html')
+
+
 
 
 
