@@ -9,15 +9,16 @@
 .create-product-container {
   max-width: 700px;
   margin: 50px auto;
-  background: #ffffff;
+  background: var(--surface-primary);
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.14);
 }
 
 .create-product-container h2 {
   margin-bottom: 25px;
-  color: #0077b6;
+  color: var(--accent);
   text-align: center;
 }
 
@@ -29,7 +30,7 @@
   display: block;
   margin-bottom: 6px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-main);
 }
 
 .create-product-container input[type="text"],
@@ -39,7 +40,9 @@
 .create-product-container textarea {
   width: 100%;
   padding: 10px 14px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-soft);
+  background: var(--input-bg);
+  color: var(--text-main);
   border-radius: 8px;
   font-size: 14px;
   transition: 0.3s;
@@ -49,15 +52,15 @@
 .create-product-container select:focus,
 .create-product-container textarea:focus {
   outline: none;
-  border-color: #0077b6;
-  box-shadow: 0 0 6px rgba(0,119,182,0.3);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
 }
 
 .create-product-container button[type="submit"] {
   display: block;
   width: 100%;
   padding: 12px;
-  background-color: #0077b6;
+  background-color: var(--accent);
   color: #fff;
   font-weight: 600;
   border: none;
@@ -68,7 +71,7 @@
 }
 
 .create-product-container button[type="submit"]:hover {
-  background-color: #005f8a;
+  background-color: var(--accent-hover);
 }
 </style>
 

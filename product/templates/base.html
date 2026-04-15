@@ -4,9 +4,114 @@
 <meta charset="UTF-8">
 <title>{% block title %} Supplements {% endblock %}</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p0R7wOG1wZL+p5C3E+Ch8s5g5t1yI4fYr1D+5H6EjB6R1Z0y9NnJq5tJ3Xe7wB+N5n1lDdU7NfXzK6kE6YqjMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 <style>
+:root {
+  --bg-page: #f3f6fb;
+  --text-main: #1e293b;
+  --nav-bg: #ffffff;
+  --nav-border: #dbe3f0;
+  --logo-color: #2563eb;
+  --logo-hover: #1d4ed8;
+  --nav-link: #334155;
+  --nav-link-hover: #2563eb;
+  --btn-primary: #2563eb;
+  --btn-primary-hover: #1d4ed8;
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #dbe3f0;
+  --sidebar-title: #64748b;
+  --sidebar-link-bg: #f1f5f9;
+  --sidebar-link: #1f2937;
+  --sidebar-link-hover-bg: #2563eb;
+  --content-bg: #f3f6fb;
+  --footer-bg: #0f172a;
+  --footer-text: #cbd5e1;
+  --social-bg: #1e293b;
+  --social-icon: #93c5fd;
+  --social-hover-bg: #2563eb;
+  --pagination-bg: #e9f2ff;
+  --pagination-text: #0077b6;
+  --theme-toggle-bg: #eef2ff;
+  --theme-toggle-border: #c7d2fe;
+  --theme-toggle-text: #1e3a8a;
+
+  --home-surface: #ffffff;
+  --home-surface-border: #dbe3f0;
+  --home-subtle-bg: #f8fbff;
+  --home-subtle-text: #475569;
+  --home-heading: #0f172a;
+  --home-chip-bg: #f1f5f9;
+  --home-chip-text: #334155;
+  --home-pill-bg: #ffffff;
+  --home-pill-border: #dbe3ef;
+  --home-pill-text: #0f172a;
+  --home-pill-hover: #1d4ed8;
+  --surface-primary: #ffffff;
+  --surface-secondary: #f8fbff;
+  --border-soft: #dbe3f0;
+  --text-muted: #64748b;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --input-bg: #ffffff;
+  --overlay: rgba(2, 8, 23, 0.5);
+}
+
+body[data-theme="dark"] {
+  --bg-page: #0b1220;
+  --text-main: #dbe7ff;
+  --nav-bg: #101a2e;
+  --nav-border: #1d2a44;
+  --logo-color: #60a5fa;
+  --logo-hover: #93c5fd;
+  --nav-link: #c3d4f5;
+  --nav-link-hover: #60a5fa;
+  --btn-primary: #2563eb;
+  --btn-primary-hover: #1d4ed8;
+  --sidebar-bg: #0f1a2f;
+  --sidebar-border: #1d2a44;
+  --sidebar-title: #8fa7cc;
+  --sidebar-link-bg: #15233d;
+  --sidebar-link: #d0def8;
+  --sidebar-link-hover-bg: #2563eb;
+  --content-bg: #0b1220;
+  --footer-bg: #101a2e;
+  --footer-text: #afc3e6;
+  --social-bg: #1b2a46;
+  --social-icon: #93c5fd;
+  --social-hover-bg: #2563eb;
+  --pagination-bg: #1b2a46;
+  --pagination-text: #93c5fd;
+  --theme-toggle-bg: #1b2a46;
+  --theme-toggle-border: #334e7a;
+  --theme-toggle-text: #dbe7ff;
+
+  --home-surface: #101a2e;
+  --home-surface-border: #223456;
+  --home-subtle-bg: #16253f;
+  --home-subtle-text: #93a8ca;
+  --home-heading: #e5edff;
+  --home-chip-bg: #1a2b47;
+  --home-chip-text: #c2d5f7;
+  --home-pill-bg: #13203a;
+  --home-pill-border: #2b3f61;
+  --home-pill-text: #dbe7ff;
+  --home-pill-hover: #60a5fa;
+  --surface-primary: #101a2e;
+  --surface-secondary: #16253f;
+  --border-soft: #223456;
+  --text-muted: #93a8ca;
+  --accent: #60a5fa;
+  --accent-hover: #3b82f6;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --input-bg: #13203a;
+  --overlay: rgba(2, 8, 23, 0.7);
+}
 
 /* PAGINATION */
 .pagination {
@@ -27,8 +132,8 @@
 }
 
 .pagination a {
-  background-color: #e9f2ff;
-  color: #0077b6;
+  background-color: var(--pagination-bg);
+  color: var(--pagination-text);
 }
 
 .pagination a:hover {
@@ -45,8 +150,8 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: #f9fbfd;
-  color: #333;
+  background: var(--bg-page);
+  color: var(--text-main);
 }
 
 /* NAVBAR */
@@ -54,22 +159,23 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #ffffff;
+  background: var(--nav-bg);
   padding: 18px 15px;
   padding-left: 50px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  border-bottom: 1px solid var(--nav-border);
 }
 
 /* LOGO */
 .logo {
   font-size: 22px;
   font-weight: 700;
-  color: #0077b6;
+  color: var(--logo-color);
   text-decoration: none;
 }
 
 .logo:hover {
-  color: #005f8a;
+  color: var(--logo-hover);
 }
 
 /* NAV LINKS */
@@ -82,7 +188,7 @@ body {
 }
 
 #navbar a {
-  color: #555;
+  color: var(--nav-link);
   text-decoration: none;
   font-weight: 500;
   padding: 5px 0;
@@ -90,12 +196,12 @@ body {
 }
 
 #navbar a:hover {
-  color: #0077b6;
+  color: var(--nav-link-hover);
 }
 
 /* SIGNUP / LOGIN / LOGOUT / EMAIL */
 .btn-login {
-  background-color: #0077b6;
+  background-color: var(--btn-primary);
   color: #fff;
   padding: 8px 14px;
   border-radius: 8px;
@@ -105,7 +211,7 @@ body {
 }
 
 .btn-login:hover {
-  background-color: #005f8a;
+  background-color: var(--btn-primary-hover);
 }
 
 .user-controls {
@@ -115,7 +221,7 @@ body {
 }
 
 .user-email {
-  background-color: #0077b6;
+  background-color: var(--btn-primary-hover);
   color: #fff;
   padding: 8px 14px;
   border-radius: 8px;
@@ -125,7 +231,60 @@ body {
 }
 
 .user-email:hover {
-  background-color: #005f8a;
+  background-color: #1e40af;
+}
+
+.theme-toggle {
+  border: 1px solid var(--theme-toggle-border);
+  background: var(--theme-toggle-bg);
+  color: var(--theme-toggle-text);
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.theme-icon {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.theme-icon-sun {
+  opacity: 0;
+  transform: rotate(-35deg) scale(0.7);
+}
+
+.theme-icon-moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+body[data-theme="dark"] .theme-icon-sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+body[data-theme="dark"] .theme-icon-moon {
+  opacity: 0;
+  transform: rotate(35deg) scale(0.7);
 }
 
 /* LAYOUT */
@@ -136,21 +295,21 @@ body {
 /* SIDEBAR MODERN */
 .sidebar {
   width: 220px;
-  background: #ffffff;
+  background: var(--sidebar-bg);
   min-height: 100vh;
   padding: 25px;
-  border-right: 1px solid #eee;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.03);
+  border-right: 1px solid var(--sidebar-border);
+  box-shadow: 2px 0 14px rgba(0,0,0,0.25);
   border-radius: 0 12px 12px 0;
 }
 
 .sidebar h3 {
   margin-bottom: 15px;
   font-size: 14px;
-  color: #888;
+  color: var(--sidebar-title);
   text-transform: uppercase;
   letter-spacing: 1px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #213252;
   padding-bottom: 5px;
 }
 
@@ -166,17 +325,17 @@ body {
 
 .sidebar a {
   text-decoration: none;
-  color: #444;
+  color: var(--sidebar-link);
   font-size: 14px;
   display: block;
   padding: 10px 12px;
   border-radius: 8px;
   transition: all 0.3s ease;
-  background-color: #f9fbfd;
+  background-color: var(--sidebar-link-bg);
 }
 
 .sidebar a:hover {
-  background: #0077b6;
+  background: var(--sidebar-link-hover-bg);
   color: #fff;
   padding-left: 16px;
   box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
@@ -222,6 +381,7 @@ body {
 /* MAIN CONTENT */
 .main-content {
   padding: 30px;
+  background: var(--content-bg);
 }
 
 /* PRODUCT CARD */
@@ -285,7 +445,7 @@ body {
 
 /* FOOTER MODERN */
 .footer {
-  background: #0077b6;
+  background: var(--footer-bg);
   color: #fff;
   padding: 50px 50px 20px;
   margin-top: 50px;
@@ -310,7 +470,7 @@ body {
 .footer-section p {
   font-size: 14px;
   line-height: 1.5;
-  color: #e0f7ff;
+  color: var(--footer-text);
 }
 
 .footer-section ul {
@@ -324,12 +484,12 @@ body {
 
 .footer-section ul li a {
   text-decoration: none;
-  color: #e0f7ff;
+  color: var(--footer-text);
   transition: 0.3s;
 }
 
 .footer-section ul li a:hover {
-  color: #ffd60a;
+  color: #93c5fd;
 }
 
 /* IKONA SOCIALE ME SVG */
@@ -345,18 +505,18 @@ body {
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--social-bg);
   transition: 0.3s;
 }
 
 .socials a svg {
   width: 16px;
   height: 16px;
-  fill: #0077b6;
+  fill: var(--social-icon);
 }
 
 .socials a:hover {
-  background: #ffd60a;
+  background: var(--social-hover-bg);
   svg {
     fill: #0077b6;
   }
@@ -365,10 +525,10 @@ body {
 .footer-bottom {
   text-align: center;
   margin-top: 30px;
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid #25395c;
   padding-top: 15px;
   font-size: 13px;
-  color: #e0f7ff;
+  color: var(--footer-text);
 }
 
 
@@ -441,6 +601,22 @@ body {
 
     {% if request.session.user %}
     <div class="user-controls">
+        <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path>
+          </svg>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+        </button>
         <span class="user-email">{{ request.session.user.email }}</span>
         <a href="{% url 'users:logout' request.session.user.pk %}" class="btn-login">Logout</a>
         <a href="{% url 'cart' %}" class="cart-icon"><img src="/media/products/2a.png" alt="Cart">
@@ -453,6 +629,22 @@ body {
 
     {% else %}
     <div class="user-controls">
+    <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+      <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path>
+      </svg>
+      <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.34 17.66-1.41 1.41"></path>
+        <path d="m19.07 4.93-1.41 1.41"></path>
+      </svg>
+    </button>
 
     <a href="{% url 'users:login' %}" class="btn-login">Login</a>
     <a href="{% url 'cart' %}" class="cart-icon"><img src="/media/products/2a.png" alt="Cart">
@@ -594,6 +786,35 @@ body {
     <p>&copy; 2026 MusclePower.ks. All rights reserved.</p>
   </div>
 </footer>
+
+<script>
+  (function () {
+    const THEME_KEY = 'musclepower-theme';
+    const body = document.body;
+    const toggleBtn = document.getElementById('themeToggle');
+
+    function setTheme(theme) {
+      body.setAttribute('data-theme', theme);
+      if (toggleBtn) {
+        const title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+        toggleBtn.setAttribute('title', title);
+        toggleBtn.setAttribute('aria-label', title);
+      }
+    }
+
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+    setTheme(savedTheme);
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function () {
+        const currentTheme = body.getAttribute('data-theme') || 'dark';
+        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(nextTheme);
+        localStorage.setItem(THEME_KEY, nextTheme);
+      });
+    }
+  })();
+</script>
 
 </body>
 </html>

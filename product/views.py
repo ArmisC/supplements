@@ -3,7 +3,7 @@ from contextlib import nullcontext
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
@@ -141,6 +141,8 @@ def goals(request):
 def add_to_cart(request, pk):
     user = get_current_user(request)
     if not user:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'error': 'Authentication required'}, status=401)
         return redirect('login')
     product = get_object_or_404(Product, pk=pk)
 
@@ -153,7 +155,10 @@ def add_to_cart(request, pk):
         item.quantity += 1
         item.save()
 
-    return redirect('home')
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({'success': True})
+
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
 
 
 def cart_view(request):

@@ -6,11 +6,11 @@
     .product-detail {
         max-width: 600px;
         margin: 50px auto;
-        border: 1px solid #eee;
+        border: 1px solid var(--border-soft);
         border-radius: 12px;
         padding: 20px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        background: #fff;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        background: var(--surface-primary);
         display: flex;
         flex-direction: column;
         position: relative;
@@ -21,7 +21,7 @@
         width: 100%;
         height: 300px;
         object-fit: contain;   /* KJO E RREGULLON */
-        background: #f8f8f8;   /* duket ma bukur kur ka boshllëk */
+        background: var(--surface-secondary);   /* duket ma bukur kur ka boshllëk */
         border-radius: 8px;
     }
 
@@ -42,12 +42,12 @@
 
     .price-old {
         text-decoration: line-through;
-        color: #999;
+        color: var(--text-muted);
         margin-right: 10px;
     }
 
     .price-new {
-        color: #0077b6;
+        color: var(--accent);
     }
 
     .discount-badge {
@@ -71,7 +71,7 @@
 
     .btn-update {
         padding: 8px 16px;
-        background-color: #0077b6;
+        background-color: var(--accent);
         color: #fff;
         border-radius: 8px;
         text-decoration: none;
@@ -83,12 +83,12 @@
     }
 
     .btn-update:hover {
-        background-color: #2980b9;
+        background-color: var(--accent-hover);
     }
 
     .btn-delete {
         padding: 8px 16px;
-        background-color: #c0392b;
+        background-color: var(--danger);
         color: #fff;
         border-radius: 8px;
         font-weight: bold;
@@ -101,7 +101,7 @@
     }
 
     .btn-delete:hover {
-        background-color: #992d22;
+        background-color: var(--danger-hover);
     }
 
     .btn-group {
@@ -111,7 +111,7 @@
 
     .btn-out {
         padding: 8px 16px;
-        background-color: #e74c3c;
+        background-color: #475569;
         color: #fff;
         border-radius: 8px;
         font-weight: bold;
@@ -153,7 +153,7 @@
     <p class="stock"><strong>Stock:</strong> {{ product.stock }}</p>
 
 <div class="bottom-row">
-    <p class="created">
+    <p class="created" style="color: var(--text-muted);">
         <strong>Added on:</strong> {{ product.created_at|date:"d M Y" }}
     </p>
 
@@ -177,15 +177,15 @@
 </div>
 
 {% if is_admin %}
-<div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
-  <div style="background:#fff; padding:30px; border-radius:12px; text-align:center; width:300px; position:relative;">
+<div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:var(--overlay); justify-content:center; align-items:center;">
+  <div style="background:var(--surface-primary); border:1px solid var(--border-soft); padding:30px; border-radius:12px; text-align:center; width:300px; position:relative;">
     <h3>Are you sure?</h3>
     <p>You are about to delete {{ product.name }}.</p>
 
     <form method="POST" action="{% url 'delete_product' product.pk %}">
       {% csrf_token %}
-      <button type="submit" style="background:#0077b6;color:#fff;padding:10px 15px;border:none;border-radius:6px;cursor:pointer;">Yes, Delete</button>
-      <button type="button" id="cancelBtn" style="background:#ccc;color:#333;padding:10px 15px;border:none;border-radius:6px;cursor:pointer;margin-left:10px;">Cancel</button>
+      <button type="submit" style="background:var(--accent);color:#fff;padding:10px 15px;border:none;border-radius:6px;cursor:pointer;">Yes, Delete</button>
+      <button type="button" id="cancelBtn" style="background:var(--surface-secondary);color:var(--text-main);padding:10px 15px;border:1px solid var(--border-soft);border-radius:6px;cursor:pointer;margin-left:10px;">Cancel</button>
     </form>
   </div>
 </div>
