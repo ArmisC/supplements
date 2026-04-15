@@ -4,14 +4,44 @@
 <meta charset="UTF-8">
 <title>Login - MusclePower.ks</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p0R7wOG1wZL+p5C3E+Ch8s5g5t1yI4fYr1D+5H6EjB6R1Z0y9NnJq5tJ3Xe7wB+N5n1lDdU7NfXzK6kE6YqjMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 <style>
+:root {
+  --bg-page: #f3f6fb;
+  --text-main: #1e293b;
+  --surface: #ffffff;
+  --surface-border: #dbe3f0;
+  --input-bg: #ffffff;
+  --input-border: #d1d9e8;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --muted: #64748b;
+  --error: #dc2626;
+  --toggle-bg: #eef2ff;
+  --toggle-border: #c7d2fe;
+  --toggle-text: #1e3a8a;
+}
+
+body[data-theme="dark"] {
+  --bg-page: #0b1220;
+  --text-main: #dbe7ff;
+  --surface: #101a2e;
+  --surface-border: #223456;
+  --input-bg: #13203a;
+  --input-border: #2d446b;
+  --accent: #60a5fa;
+  --accent-hover: #3b82f6;
+  --muted: #93a8ca;
+  --error: #f87171;
+  --toggle-bg: #1b2a46;
+  --toggle-border: #334e7a;
+  --toggle-text: #dbe7ff;
+}
+
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: #f9fbfd;
-  color: #333;
+  background: var(--bg-page);
+  color: var(--text-main);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,17 +49,19 @@ body {
 }
 
 .login-container {
-  background: #ffffff;
+  background: var(--surface);
   padding: 40px 35px;
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  border: 1px solid var(--surface-border);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.16);
   width: 380px;
   text-align: center;
+  position: relative;
 }
 
 .login-container h2 {
   margin-bottom: 25px;
-  color: #0077b6; /* Ngjyra e logo/navbar */
+  color: var(--accent);
 }
 
 .login-container input[type="text"],
@@ -37,7 +69,9 @@ body {
   width: 90%;
   padding: 12px 15px;
   margin: 10px 0;
-  border: 1px solid #ddd;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text-main);
   border-radius: 8px;
   font-size: 14px;
   transition: 0.3s;
@@ -45,7 +79,8 @@ body {
 
 .login-container input[type="text"]:focus,
 .login-container input[type="password"]:focus {
-  border-color: #0077b6;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
   outline: none;
 }
 
@@ -53,7 +88,7 @@ body {
   width: 100%;
   padding: 12px;
   margin-top: 15px;
-  background-color: #0077b6; /* E njëjta me navbar/footer */
+  background-color: var(--accent);
   color: #fff;
   font-weight: 500;
   border: none;
@@ -63,20 +98,20 @@ body {
 }
 
 .login-container .btn-login:hover {
-  background-color: #005f8a; /* E njëjta me hover-in e navbar */
+  background-color: var(--accent-hover);
 }
 
 .login-container .forgot-password {
   display: block;
   margin-top: 12px;
   font-size: 13px;
-  color: #0077b6; /* E njëjta ngjyrë si butoni */
+  color: var(--accent);
   text-decoration: none;
   transition: 0.3s;
 }
 
 .login-container .forgot-password:hover {
-  color: #005f8a;
+  color: var(--accent-hover);
 }
 
 .login-container .signup {
@@ -85,20 +120,92 @@ body {
 }
 
 .login-container .signup a {
-  color: #0077b6;
+  color: var(--accent);
   text-decoration: none;
   font-weight: 500;
   transition: 0.3s;
 }
 
 .login-container .signup a:hover {
-  color: #005f8a;
+  color: var(--accent-hover);
+}
+
+.error-text {
+  color: var(--error);
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: 1px solid var(--toggle-border);
+  background: var(--toggle-bg);
+  color: var(--toggle-text);
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.theme-icon {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.theme-icon-sun {
+  opacity: 0;
+  transform: rotate(-35deg) scale(0.7);
+}
+
+.theme-icon-moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+body[data-theme="dark"] .theme-icon-sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+body[data-theme="dark"] .theme-icon-moon {
+  opacity: 0;
+  transform: rotate(35deg) scale(0.7);
 }
 </style>
 </head>
 <body>
 
 <div class="login-container">
+  <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+    <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path>
+    </svg>
+    <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path><path d="M12 20v2"></path>
+      <path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
+      <path d="M2 12h2"></path><path d="M20 12h2"></path>
+      <path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
+    </svg>
+  </button>
   <h2>Login</h2>
   <form method="POST" action="{% url 'users:login' %}">
     {% csrf_token %}
@@ -106,7 +213,7 @@ body {
     <input type="password" name="password" placeholder="Password" required>
 
     {% if error %}
-<li style="color: red">{{ error }}</li>
+<li class="error-text">{{ error }}</li>
 {% endif %}
 
     <button type="submit" class="btn-login">Login</button>
@@ -116,6 +223,26 @@ body {
     Don't have an account? <a href="{% url 'users:signup' %}">Sign Up</a>
   </div>
 </div>
+
+<script>
+  (function () {
+    const THEME_KEY = 'musclepower-theme';
+    const body = document.body;
+    const toggleBtn = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+
+    body.setAttribute('data-theme', savedTheme);
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function () {
+        const currentTheme = body.getAttribute('data-theme') || 'dark';
+        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        body.setAttribute('data-theme', nextTheme);
+        localStorage.setItem(THEME_KEY, nextTheme);
+      });
+    }
+  })();
+</script>
 
 </body>
 </html>

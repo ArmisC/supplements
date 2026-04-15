@@ -9,32 +9,52 @@
         padding: 40px;
         text-align: center;
         border-radius: 12px;
-        background-color: #ffffff;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        background-color: var(--surface-primary);
+        border: 1px solid var(--border-soft);
+        box-shadow: 0 10px 24px rgba(0,0,0,0.14);
     }
 
     .success-icon {
-        font-size: 60px;
-        color: #28a745;
-        margin-bottom: 20px;
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 20px;
+        color: var(--success);
+    }
+
+    .success-icon svg {
+        width: 100%;
+        height: 100%;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .success-icon .circle {
+        stroke: currentColor;
+    }
+
+    .success-icon .check {
+        stroke: currentColor;
     }
 
     .success-title {
         font-size: 28px;
         font-weight: bold;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
 
     .success-text {
         font-size: 16px;
-        color: #555;
+        color: var(--text-muted);
         margin-bottom: 30px;
     }
 
     .home-btn {
         display: inline-block;
         padding: 12px 25px;
-        background-color: #007bff;
+        background-color: var(--accent);
         color: white;
         text-decoration: none;
         border-radius: 8px;
@@ -42,13 +62,16 @@
     }
 
     .home-btn:hover {
-        background-color: #0056b3;
+        background-color: var(--accent-hover);
     }
 </style>
 
 <div class="success-container">
     <div class="success-icon">
-        <i class="fa fa-check-circle"></i>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle class="circle" cx="12" cy="12" r="9"></circle>
+            <path class="check" d="m8.5 12.5 2.5 2.5 4.5-5"></path>
+        </svg>
     </div>
 
     <div class="success-title">

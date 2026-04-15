@@ -5,14 +5,7 @@
 {% block banner %}{% endblock %}
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: #f9fbfd;
-  color: #333;
-}
-
-.container {
+.shop-wrap {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
@@ -28,10 +21,11 @@ body {
 /* Secili produkt si rresht horizontal */
 .product-row {
   display: flex;
-  background: #fff;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-soft);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.14);
   transition: 0.3s;
 }
 
@@ -45,7 +39,7 @@ body {
   width: 200px;
   height: 200px;
   object-fit: cover;
-  border-right: 1px solid #eee;
+  border-right: 1px solid var(--border-soft);
 }
 
 /* Të dhënat në të djathtë */
@@ -58,21 +52,19 @@ body {
 
 .product-info h3 {
   margin: 0 0 10px 0;
-  color: #0077b6;
+  color: var(--accent);
   font-size: 18px;
 }
 
 .product-info p {
   margin: 4px 0;
-  color: #555;
+  color: var(--text-muted);
   font-size: 14px;
 }
 </style>
-</head>
-<body>
 
-<div class="container">
-  <h1 style="color:#0077b6; margin-bottom: 25px;">All Products</h1>
+<div class="shop-wrap">
+  <h1 style="color:var(--accent); margin-bottom: 25px;">All Products</h1>
 
   <div class="products-container">
     {% for product in products %}
@@ -90,7 +82,4 @@ body {
     {% endfor %}
   </div>
 </div>
-
-</body>
-</html>
 {% endblock %}

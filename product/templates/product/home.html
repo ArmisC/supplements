@@ -1,169 +1,424 @@
 {% extends 'base.html' %}
-{% block title %} Supplements {% endblock %}
+{% block title %}Supplements{% endblock %}
 
 {% block content %}
 <style>
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
+.home-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  color: var(--text-main);
 }
 
-.card-link {
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: linear-gradient(120deg, #0f172a 0%, #1e3a8a 55%, #0ea5e9 100%);
+  color: #fff;
+  padding: 34px 36px;
+  margin-bottom: 24px;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  right: -80px;
+  top: -110px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.hero h1 {
+  margin: 0 0 10px;
+  font-size: 34px;
+  letter-spacing: -0.6px;
+}
+
+.hero p {
+  margin: 0;
+  max-width: 560px;
+  font-size: 15px;
+  color: #dbeafe;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 12px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.toolbar h2 {
+  margin: 0;
+  font-size: 22px;
+  color: var(--home-heading);
+}
+
+.product-count {
+  color: var(--home-subtle-text);
+  font-size: 14px;
+}
+
+.category-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.category-pill {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--home-pill-text);
+  border: 1px solid var(--home-pill-border);
+  background: var(--home-pill-bg);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.category-pill:hover {
+  border-color: var(--home-pill-hover);
+  color: var(--home-pill-hover);
+  transform: translateY(-1px);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.product-card {
+  background: var(--home-surface);
+  border: 1px solid var(--home-surface-border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  border-color: #355586;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+.product-link {
   text-decoration: none;
   color: inherit;
+  display: block;
 }
 
-.card {
-  border: 1px solid #eee;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #fff;
-  position: relative; /* për badge */
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+.product-media {
+  position: relative;
+  background: linear-gradient(180deg, var(--home-subtle-bg) 0%, var(--home-surface) 100%);
 }
 
 .product-img {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 205px;
+  object-fit: contain;
   display: block;
 }
 
-/* BLUE DIVIDER WITHOUT GAP */
-.divider {
-  height: 2px;
-  background-color: #0077b6;
-  margin: 0;
-  padding: 0;
-}
-
-.card-body {
-  padding: 15px;
-}
-
-.card h3 {
-  margin: 0;
-  font-size: 18px;
-}
-
-.category {
-  color: gray;
-  font-size: 14px;
-}
-
-.brand {
-  font-size: 13px;
-  color: #777;
-}
-
-.description {
-  font-size: 14px;
-  margin: 10px 0;
-}
-
-.price {
-  font-size: 18px;
-  font-weight: bold;
-  color: #27ae60;
-}
-
-.price-old {
-  text-decoration: line-through;
-  color: #999;
-  font-size: 14px;
-}
-
-.price-new {
-  color: #0077b6;
-  font-weight: bold;
-  margin-left: 5px;
-  font-size: 16px;
-}
-
-.extra {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: #555;
-}
-
-.stock {
-  font-size: 12px;
-  color: #999;
-  margin-top: 10px;
-}
-
-/* BADGE FOR DISCOUNT */
 .discount-badge {
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: #ef4444;
+  background: #ef4444;
   color: #fff;
-  padding: 5px 10px;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.product-body {
+  padding: 14px;
+}
+
+.meta-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--home-subtle-text);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.product-title {
+  margin: 10px 0 6px;
+  font-size: 17px;
+  color: var(--home-heading);
+  line-height: 1.3;
+}
+
+.product-description {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--home-subtle-text);
+  min-height: 38px;
+}
+
+.product-details {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.detail-chip {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--home-chip-bg);
+  color: var(--home-chip-text);
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.price-block {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.price-main {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--home-heading);
+}
+
+.price-old {
+  font-size: 13px;
+  color: var(--home-subtle-text);
+  text-decoration: line-through;
+}
+
+.stock {
   font-size: 12px;
-  font-weight: bold;
-  border-radius: 6px;
-  z-index: 10;
+  color: var(--home-subtle-text);
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-add-cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 110px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 10px;
+  border: 1px solid #1d4ed8;
+  background: #1d4ed8;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-add-cart:hover {
+  background: #1e40af;
+  border-color: #1e40af;
+}
+
+.btn-add-cart.disabled {
+  background: #334155;
+  border-color: #334155;
+  color: #b9c7de;
+  pointer-events: none;
+}
+
+.btn-add-cart.loading {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 24px 20px;
+  }
+
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  .toolbar h2 {
+    font-size: 19px;
+  }
 }
 </style>
 
-<div class="products">
-  {% for product in products %}
-    {% if product.pk %}
-      <a href="{% url 'detail' product.pk %}" class="card-link">
-        <div class="card">
+<div class="home-shell">
+  <section class="hero">
+    <h1>Premium Supplements for Real Results</h1>
+    <p>
+      Shop trusted protein, creatine, pre-workout and recovery products designed for strength, endurance, and better progress every week.
+    </p>
+    <div class="hero-stats">
+      <span class="hero-stat">Fast delivery</span>
+      <span class="hero-stat">Authentic products</span>
+      <span class="hero-stat">Top athlete picks</span>
+    </div>
+  </section>
 
-          {% if product.discount_percent %}
-            <span class="discount-badge">-{{ product.discount_percent }}%</span>
-          {% endif %}
+  <div class="toolbar">
+    <h2>Popular Products</h2>
+    <span class="product-count">{{ products|length }} products shown</span>
+  </div>
 
-          {% if product.image %}
-            <img src="{{ product.image.url }}" class="product-img">
-          {% else %}
-            <img src="https://via.placeholder.com/200" class="product-img">
-          {% endif %}
+  <div class="category-pills">
+    <a href="{% url 'home' %}" class="category-pill">All</a>
+    {% for category, label in categories %}
+      <a href="{% url 'home_with_category' category %}" class="category-pill">{{ label }}</a>
+    {% endfor %}
+  </div>
 
-          <div class="divider"></div>
+  <br>
 
-          <div class="card-body">
-            <h3>{{ product.name }}</h3>
-            <p class="category">{{ product.category }}</p>
-            <p class="brand">{{ product.brand }}</p>
-
-            <p class="description">
-              {{ product.description|truncatechars:80 }}
-            </p>
-
-            <p class="price">
+  <div class="products-grid">
+    {% for product in products %}
+      {% if product.pk %}
+        <article class="product-card">
+          <a href="{% url 'detail' product.pk %}" class="product-link">
+            <div class="product-media">
               {% if product.discount_percent %}
-                <span class="price-old">{{ product.price }}€</span>
-                <span class="price-new">{{ product.get_discount_price }}€</span>
-              {% else %}
-                {{ product.price }}€
+                <span class="discount-badge">-{{ product.discount_percent }}%</span>
               {% endif %}
-            </p>
 
-            <div class="extra">
-              <span>{{ product.weight }}Kg</span>
-              <span>{{ product.flavor }}</span>
+              {% if product.image %}
+                <img src="{{ product.image.url }}" class="product-img" alt="{{ product.name }}">
+              {% else %}
+                <img src="https://via.placeholder.com/300x300" class="product-img" alt="{{ product.name }}">
+              {% endif %}
             </div>
 
-            <p class="stock">Stock: {{ product.stock }}</p>
+            <div class="product-body">
+              <div class="meta-line">
+                <span>{{ product.category }}</span>
+                <span>{{ product.brand }}</span>
+              </div>
 
+              <h3 class="product-title">{{ product.name }}</h3>
+              <p class="product-description">{{ product.description|truncatechars:78 }}</p>
+
+              <div class="product-details">
+                <span class="detail-chip">{{ product.weight }}kg</span>
+                <span class="detail-chip">{{ product.flavor }}</span>
+              </div>
+
+              <div class="price-row">
+                <div class="price-block">
+                  {% if product.discount_percent %}
+                    <span class="price-old">{{ product.price }}€</span>
+                    <span class="price-main">{{ product.get_discount_price }}€</span>
+                  {% else %}
+                    <span class="price-main">{{ product.price }}€</span>
+                  {% endif %}
+                </div>
+                <span class="stock">Stock: {{ product.stock }}</span>
+              </div>
+            </div>
+          </a>
+
+          <div class="product-body">
+            <div class="card-actions">
+              {% if product.stock > 0 %}
+                <a href="{% url 'add_to_cart' product.pk %}" class="btn-add-cart js-add-to-cart">Add to Cart</a>
+              {% else %}
+                <span class="btn-add-cart disabled">Out of Stock</span>
+              {% endif %}
+            </div>
           </div>
-
-        </div>
-      </a>
-    {% endif %}
-  {% endfor %}
+        </article>
+      {% endif %}
+    {% empty %}
+      <p>No products available right now.</p>
+    {% endfor %}
+  </div>
 </div>
 
+<script>
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+      return parts.pop().split(';').shift();
+    }
+    return '';
+  }
+
+  document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const url = button.getAttribute('href');
+      if (!url) return;
+
+      const originalText = button.textContent;
+      button.classList.add('loading');
+      button.textContent = 'Adding...';
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCookie('csrftoken')
+          }
+        });
+
+        if (response.ok) {
+          button.textContent = 'Added';
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('loading');
+          }, 700);
+        } else {
+          button.textContent = 'Try again';
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('loading');
+          }, 1000);
+        }
+      } catch (error) {
+        button.textContent = 'Try again';
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.classList.remove('loading');
+        }, 1000);
+      }
+    });
+  });
+</script>
 {% endblock %}
