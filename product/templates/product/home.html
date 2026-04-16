@@ -114,6 +114,8 @@
   border: 1px solid var(--home-surface-border);
   border-radius: 16px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
@@ -126,7 +128,9 @@
 .product-link {
   text-decoration: none;
   color: inherit;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .product-media {
@@ -157,6 +161,17 @@
   padding: 14px;
 }
 
+.product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-actions-body {
+  margin-top: auto; /* keeps buttons aligned to the bottom of the card */
+  padding: 10px 14px 14px; /* slightly higher button */
+}
+
 .meta-line {
   display: flex;
   justify-content: space-between;
@@ -180,6 +195,10 @@
   line-height: 1.45;
   color: var(--home-subtle-text);
   min-height: 38px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* keep descriptions to the same height across cards */
+  overflow: hidden;
 }
 
 .product-details {
@@ -324,7 +343,7 @@
               {% endif %}
             </div>
 
-            <div class="product-body">
+            <div class="product-body product-info">
               <div class="meta-line">
                 <span>{{ product.category }}</span>
                 <span>{{ product.brand }}</span>
@@ -352,7 +371,7 @@
             </div>
           </a>
 
-          <div class="product-body">
+          <div class="product-body card-actions-body">
             <div class="card-actions">
               {% if product.stock > 0 %}
                 <a href="{% url 'add_to_cart' product.pk %}" class="btn-add-cart js-add-to-cart">Add to Cart</a>
@@ -379,6 +398,23 @@
     return '';
   }
 
+  function bumpCartBadge() {
+    const badge = document.querySelector('.cart-badge');
+    if (badge) {
+      const current = parseInt(badge.textContent, 10);
+      badge.textContent = String((Number.isFinite(current) ? current : 0) + 1);
+      return;
+    }
+
+    const cartLink = document.querySelector('.cart-icon');
+    if (!cartLink) return;
+
+    const newBadge = document.createElement('span');
+    newBadge.className = 'cart-badge';
+    newBadge.textContent = '1';
+    cartLink.appendChild(newBadge);
+  }
+
   document.querySelectorAll('.js-add-to-cart').forEach((button) => {
     button.addEventListener('click', async (event) => {
       event.preventDefault();
@@ -399,6 +435,7 @@
         });
 
         if (response.ok) {
+          bumpCartBadge();
           button.textContent = 'Added';
           setTimeout(() => {
             button.textContent = originalText;

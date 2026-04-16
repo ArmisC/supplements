@@ -4,128 +4,281 @@
 {% block banner %}{% endblock %}
 
 {% block content %}
-    <style>
-        .update-wrap {
-            max-width: 700px;
-            margin: 40px auto;
-            background-color: var(--surface-primary);
-            border: 1px solid var(--border-soft);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 24px rgba(0,0,0,0.14);
-        }
+<style>
+  .update-page {
+    max-width: 980px;
+    margin: 34px auto 10px;
+    color: var(--home-heading);
+  }
 
-        .update-wrap h1 {
-            text-align: center;
-            color: var(--accent);
-            margin-top: 0;
-            margin-bottom: 24px;
-        }
+  .update-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 16px;
+    text-decoration: none;
+    color: var(--home-subtle-text);
+    font-size: 13px;
+    font-weight: 600;
+  }
 
-        .update-wrap label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-main);
-        }
+  .update-back:hover {
+    color: var(--home-pill-hover);
+  }
 
-        .update-wrap input[type="text"],
-        .update-wrap input[type="number"],
-        .update-wrap input[type="file"],
-        .update-wrap textarea,
-        .update-wrap select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-soft);
-            border-radius: 8px;
-            font-size: 14px;
-            background: var(--input-bg);
-            color: var(--text-main);
-        }
+  .update-card {
+    background: var(--home-surface);
+    border: 1px solid var(--home-surface-border);
+    border-radius: 18px;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+    padding: 24px;
+  }
 
-        .update-wrap textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
+  .update-head h1 {
+    margin: 0;
+    font-size: 30px;
+    color: var(--home-heading);
+  }
 
-        .update-wrap button {
-            background-color: var(--accent);
-            color: #fff;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            font-weight: 600;
-        }
+  .update-head p {
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: var(--home-subtle-text);
+  }
 
-        .update-wrap button:hover {
-            background-color: var(--accent-hover);
-        }
+  .update-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
-        .update-wrap img {
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border: 1px solid var(--border-soft);
-            background: var(--surface-secondary);
-        }
-    </style>
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+    row-gap: 18px;
+  }
 
-    <div class="update-wrap">
-    <h1>Update Product</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="{{ producti.name }}">
+  .form-field.full {
+    grid-column: 1 / -1;
+  }
 
-        <label for="id_category">Category:</label>
-        <select name="category" id="id_category" required>
-          <option value="Protein" {% if producti.category == "Protein" %}selected{% endif %}>Protein</option>
-          <option value="Creatine" {% if producti.category == "Creatine" %}selected{% endif %}>Creatine</option>
-          <option value="Vitamin" {% if producti.category == "Vitamin" %}selected{% endif %}>Vitamin</option>
-          <option value="Pre Workout" {% if producti.category == "Pre Workout" %}selected{% endif %}>Pre Workout</option>
-          <option value="Fat Burner" {% if producti.category == "Fat Burner" %}selected{% endif %}>Fat Burner</option>
-          <option value="Gainers" {% if producti.category == "Gainers" %}selected{% endif %}>Gainers</option>
-          <option value="Amino Acids" {% if producti.category == "Amino Acids" %}selected{% endif %}>Amino Acids</option>
-          <option value="Collagen" {% if producti.category == "Collagen" %}selected{% endif %}>Collagen</option>
-          <option value="Testosteron Booster" {% if producti.category == "Testosteron Booster" %}selected{% endif %}>Testosteron Booster</option>
-          <option value="Accessories" {% if producti.category == "Accessories" %}selected{% endif %}>Accessories</option>
-          <option value="Weight Loss" {% if producti.category == "Weight Loss" %}selected{% endif %}>Weight Loss</option>
-        </select>
+  .form-field label {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--home-heading);
+  }
 
-        <label for="brand">Brand:</label>
-        <input type="text" id="brand" name="brand" value="{{ producti.brand }}">
+  .form-field input[type="text"],
+  .form-field input[type="number"],
+  .form-field input[type="file"],
+  .form-field textarea,
+  .form-field select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    line-height: 1.35;
+    border: 1px solid var(--home-surface-border);
+    border-radius: 10px;
+    font-size: 14px;
+    background: var(--home-subtle-bg);
+    color: var(--home-heading);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
 
-        <label for="description">Description:</label>
-        <textarea id="description" name="description">{{ producti.description }}</textarea>
+  .form-field input:focus,
+  .form-field textarea:focus,
+  .form-field select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
 
-        <label for="price">Price:</label>
-        <input type="number" id="price" name="price" step="0.01" value="{{ producti.price }}">
+  .form-field textarea {
+    resize: vertical;
+    min-height: 110px;
+    padding-top: 10px;
+  }
 
-        <label for="stock">Stock:</label>
-        <input type="number" id="stock" name="stock" value="{{ producti.stock }}">
+  .form-field input::placeholder,
+  .form-field textarea::placeholder {
+    color: var(--home-subtle-text);
+    opacity: 0.88;
+  }
 
-        <label for="weight">Weight:</label>
-        <input type="text" id="weight" name="weight" value="{{ producti.weight }}">
+  .image-preview {
+    margin-top: 4px;
+  }
 
-        <label for="flavor">Flavor:</label>
-        <input type="text" id="flavor" name="flavor" value="{{ producti.flavor }}">
+  .image-preview img {
+    width: 170px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid var(--home-surface-border);
+    background: var(--home-subtle-bg);
+    padding: 6px;
+    display: block;
+  }
 
-        <label for="discount_percent">Discount (%)</label>
-        <input type="number" id="discount_percent" name="discount_percent" min="0" max="100" step="1" value="{{ producti.discount_percent|default:0 }}">
+  .form-actions {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 
-        <label for="image">Image:</label>
-        {% if producti.image %}
-            <img src="{{ producti.image.url }}" alt="Current Image" width="150">
-        {% endif %}
-        <input type="file" id="image" name="image">
+  .btn-submit,
+  .btn-cancel {
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
 
-        <button type="submit">Update Product</button>
-    </form>
+  .btn-submit {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+    color: #fff;
+  }
+
+  .btn-submit:hover {
+    background: #1e40af;
+    border-color: #1e40af;
+  }
+
+  .btn-cancel {
+    background: transparent;
+    border-color: var(--home-surface-border);
+    color: var(--home-heading);
+  }
+
+  .btn-cancel:hover {
+    background: var(--home-chip-bg);
+  }
+
+  @media (max-width: 760px) {
+    .update-page {
+      margin-top: 20px;
+    }
+
+    .update-card {
+      padding: 16px;
+    }
+
+    .update-head h1 {
+      font-size: 24px;
+    }
+
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="update-page">
+  <a href="{% url 'detail' producti.pk %}" class="update-back">← Back to product</a>
+
+  <section class="update-card">
+    <div class="update-head">
+      <h1>Update Product</h1>
+      <p>Edit product details, pricing, stock, and image in one place.</p>
     </div>
+
+    <form method="POST" enctype="multipart/form-data" class="update-form">
+      {% csrf_token %}
+
+      <div class="form-grid">
+        <div class="form-field full">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" value="{{ producti.name }}">
+        </div>
+
+        <div class="form-field">
+          <label for="id_category">Category</label>
+          <select name="category" id="id_category" required>
+            <option value="Protein" {% if producti.category == "Protein" %}selected{% endif %}>Protein</option>
+            <option value="Creatine" {% if producti.category == "Creatine" %}selected{% endif %}>Creatine</option>
+            <option value="Vitamin" {% if producti.category == "Vitamin" %}selected{% endif %}>Vitamin</option>
+            <option value="Pre Workout" {% if producti.category == "Pre Workout" %}selected{% endif %}>Pre Workout</option>
+            <option value="Fat Burner" {% if producti.category == "Fat Burner" %}selected{% endif %}>Fat Burner</option>
+            <option value="Gainers" {% if producti.category == "Gainers" %}selected{% endif %}>Gainers</option>
+            <option value="Amino Acids" {% if producti.category == "Amino Acids" %}selected{% endif %}>Amino Acids</option>
+            <option value="Collagen" {% if producti.category == "Collagen" %}selected{% endif %}>Collagen</option>
+            <option value="Testosteron Booster" {% if producti.category == "Testosteron Booster" %}selected{% endif %}>Testosteron Booster</option>
+            <option value="Accessories" {% if producti.category == "Accessories" %}selected{% endif %}>Accessories</option>
+            <option value="Weight Loss" {% if producti.category == "Weight Loss" %}selected{% endif %}>Weight Loss</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="brand">Brand</label>
+          <input type="text" id="brand" name="brand" value="{{ producti.brand }}">
+        </div>
+
+        <div class="form-field full">
+          <label for="description">Description</label>
+          <textarea id="description" name="description">{{ producti.description }}</textarea>
+        </div>
+
+        <div class="form-field">
+          <label for="price">Price</label>
+          <input type="number" id="price" name="price" step="0.01" value="{{ producti.price }}">
+        </div>
+
+        <div class="form-field">
+          <label for="discount_percent">Discount (%)</label>
+          <input type="number" id="discount_percent" name="discount_percent" min="0" max="100" step="1" value="{{ producti.discount_percent|default:0 }}">
+        </div>
+
+        <div class="form-field">
+          <label for="stock">Stock</label>
+          <input type="number" id="stock" name="stock" value="{{ producti.stock }}">
+        </div>
+
+        <div class="form-field">
+          <label for="weight">Weight</label>
+          <input type="text" id="weight" name="weight" value="{{ producti.weight }}">
+        </div>
+
+        <div class="form-field full">
+          <label for="flavor">Flavor</label>
+          <input type="text" id="flavor" name="flavor" value="{{ producti.flavor }}">
+        </div>
+
+        <div class="form-field full">
+          <label for="image">Image</label>
+          {% if producti.image %}
+            <div class="image-preview">
+              <img src="{{ producti.image.url }}" alt="Current image">
+            </div>
+          {% endif %}
+          <input type="file" id="image" name="image">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">Save Changes</button>
+        <a href="{% url 'detail' producti.pk %}" class="btn-cancel">Cancel</a>
+      </div>
+    </form>
+  </section>
+</div>
 {% endblock %}
 
 {% block side %}{% endblock %}

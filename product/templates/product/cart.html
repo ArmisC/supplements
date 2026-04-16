@@ -3,198 +3,538 @@
 
 {% block content %}
 <style>
-/* SHPORTA */
-.cart-container {
-  max-width: 900px;
-  margin: 40px auto;
-  background: var(--surface-primary);
-  padding: 25px;
-  border-radius: 12px;
-  border: 1px solid var(--border-soft);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.14);
-}
+  .cart-page {
+    max-width: 1100px;
+    margin: 34px auto 10px;
+  }
 
-.cart-container h1 {
-  text-align: center;
-  color: var(--accent);
-  margin-bottom: 30px;
-}
+  .cart-shell {
+    background: var(--home-surface);
+    border: 1px solid var(--home-surface-border);
+    border-radius: 18px;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+    padding: 24px;
+  }
 
-.cart-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 25px;
-}
+  .cart-title {
+    text-align: center;
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.2;
+    color: var(--home-heading);
+  }
 
-.cart-table th, .cart-table td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid var(--border-soft);
-  vertical-align: middle;
-}
+  .cart-subtitle {
+    text-align: center;
+    margin: 10px 0 22px;
+    color: var(--home-subtle-text);
+    font-size: 14px;
+    line-height: 1.5;
+  }
 
-.cart-table th {
-  background: var(--surface-secondary);
-  color: var(--text-main);
-}
+  .table-wrap {
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--home-surface-border);
+  }
 
-.cart-table td img {
-  border-radius: 8px;
-  margin-right: 10px;
-  vertical-align: middle;
-}
+  .cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0;
+    min-width: 0;
+  }
 
-.price-old {
-  text-decoration: line-through;
-  color: var(--text-muted);
-  margin-right: 5px;
-}
-
-.price-new {
-  color: var(--accent);
-  font-weight: bold;
-}
-
-.cart-actions a {
-  text-decoration: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  margin-right: 5px;
-  transition: all 0.3s ease;
-}
-
-.cart-actions .btn-secondary {
-  background: var(--surface-secondary);
-  color: var(--accent);
-  border: 1px solid var(--border-soft);
-}
-
-.cart-actions .btn-secondary:hover {
-  background: var(--accent);
-  color: #fff;
-}
-
-.cart-actions .btn-danger {
-  background: #ef4444;
-  color: #fff;
-}
-
-.cart-actions .btn-danger:hover {
-  background: #c30000;
-}
-
-.total-price {
-  text-align: right;
-  font-size: 18px;
-  font-weight: bold;
-  color: var(--accent);
-  margin-bottom: 25px;
-}
-
-/* BUTONAT POSHT */
-.cart-buttons {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.cart-buttons a {
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: 500;
-  text-decoration: none;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.cart-buttons .btn-home {
-  background: var(--surface-secondary);
-  color: var(--accent);
-  border: 1px solid var(--border-soft);
-}
-
-.cart-buttons .btn-home:hover {
-  background: var(--accent);
-  color: #fff;
-}
-
-.cart-buttons .btn-checkout {
-  background: var(--accent);
-  color: #fff;
-}
-
-.cart-buttons .btn-checkout:hover {
-  background: var(--accent-hover);
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
   .cart-table th, .cart-table td {
+    padding: 14px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--home-surface-border);
+    vertical-align: middle;
+    color: var(--home-heading);
+  }
+
+  .cart-table th {
+    background: var(--home-subtle-bg);
+    color: var(--home-heading);
     font-size: 13px;
-    padding: 8px 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
+
+  .cart-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .cart-table td img {
+    border-radius: 10px;
+    margin-right: 10px;
+    vertical-align: middle;
+    border: 1px solid var(--home-surface-border);
+  }
+
+  .price-old {
+    text-decoration: line-through;
+    color: var(--home-subtle-text);
+    margin-right: 6px;
+    font-weight: 600;
+  }
+
+  .price-new {
+    color: var(--accent);
+    font-weight: 900;
+  }
+
+  .cart-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .qty-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid var(--home-surface-border);
+    background: var(--home-subtle-bg);
+    color: var(--home-heading);
+    text-decoration: none;
+    font-weight: 800;
+    transition: all 0.2s ease;
+  }
+
+  .qty-btn:hover {
+    background: var(--home-chip-bg);
+    border-color: rgba(96, 165, 250, 0.45);
+    transform: translateY(-1px);
+  }
+
+  .btn-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 14px;
+    border-radius: 10px;
+    background: #dc2626;
+    border: 1px solid #dc2626;
+    color: #fff;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-danger:hover {
+    background: #b91c1c;
+    border-color: #b91c1c;
+  }
+
+  .cart-total {
+    text-align: right;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--accent);
+    margin: 18px 4px 20px;
+  }
+
   .cart-buttons {
-    flex-direction: column;
-    align-items: stretch;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
   }
-}
+
+  .cart-buttons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-home {
+    background: var(--home-subtle-bg);
+    color: var(--accent);
+    border: 1px solid var(--home-surface-border);
+  }
+
+  .btn-home:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .btn-checkout {
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid var(--accent);
+  }
+
+  .btn-checkout:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+
+  /* Desktop layout: items list + summary panel */
+  .cart-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 18px;
+    align-items: start;
+  }
+
+  .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .cart-summary {
+    position: sticky;
+    top: 110px;
+    border: 1px solid var(--home-surface-border);
+    background: var(--home-subtle-bg);
+    border-radius: 16px;
+    padding: 14px;
+  }
+
+  .cart-item-card {
+    border: 1px solid var(--home-surface-border);
+    background: var(--home-subtle-bg);
+    border-radius: 16px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cart-item-top {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .cart-item-left {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .cart-item-img {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    border: 1px solid var(--home-surface-border);
+    background: var(--home-surface);
+    object-fit: contain;
+  }
+
+  .cart-item-name {
+    font-weight: 900;
+    color: var(--home-heading);
+    word-break: break-word;
+  }
+
+  .cart-item-price {
+    text-align: right;
+    min-width: 120px;
+  }
+
+  .cart-item-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .qty-value {
+    font-weight: 900;
+    min-width: 22px;
+    text-align: center;
+  }
+
+  /* Hide legacy layout (table + old buttons) */
+  .table-wrap,
+  .cart-cards,
+  .cart-total,
+  .cart-buttons {
+    display: none;
+  }
+
+  .cart-summary-total {
+    text-align: right;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--accent);
+    margin: 6px 4px 16px;
+  }
+
+  .cart-summary-actions {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .cart-summary-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  /* Mobile cards layout */
+  .cart-cards {
+    display: none;
+    margin-top: 12px;
+    gap: 14px;
+  }
+
+  .cart-card {
+    border: 1px solid var(--home-surface-border);
+    border-radius: 16px;
+    background: var(--home-subtle-bg);
+    padding: 14px;
+  }
+
+  .cart-card-top {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .cart-card img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+    border-radius: 12px;
+    border: 1px solid var(--home-surface-border);
+    background: var(--home-surface);
+  }
+
+  .cart-card-name {
+    font-weight: 900;
+    color: var(--home-heading);
+  }
+
+  .cart-card-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .cart-card-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .cart-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .cart-summary {
+      position: static;
+      padding: 14px;
+    }
+
+    .cart-shell {
+      padding: 16px;
+    }
+
+    .cart-summary-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .cart-summary-actions a {
+      width: 100%;
+    }
+  }
 </style>
 
-<div class="cart-container">
-  <h1>Shporta Juaj</h1>
+<div class="cart-page">
+  <section class="cart-shell">
+    <h1 class="cart-title">Shporta Juaj</h1>
+    <p class="cart-subtitle">Menaxho artikujt, sasinë dhe vazhdo me porosinë.</p>
 
   {% if items %}
-  <table class="cart-table">
-      <tr>
+    <div class="cart-layout">
+      <div class="cart-items">
+        {% for entry in items %}
+          <article class="cart-item-card">
+            <div class="cart-item-top">
+              <div class="cart-item-left">
+                {% if entry.item.product.image %}
+                  <img
+                    src="{{ entry.item.product.image.url }}"
+                    alt="{{ entry.item.product.name }}"
+                    class="cart-item-img"
+                  >
+                {% else %}
+                  <img
+                    src="https://via.placeholder.com/150"
+                    alt="{{ entry.item.product.name }}"
+                    class="cart-item-img"
+                  >
+                {% endif %}
+                <div>
+                  <div class="cart-item-name">{{ entry.item.product.name }}</div>
+                  <div class="cart-item-meta">
+                    {{ entry.item.product.category }} • Qty: {{ entry.item.quantity }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="cart-item-price">
+                {% if entry.has_discount %}
+                  <div class="price-old">{{ entry.original_price|floatformat:2 }}€</div>
+                  <div class="price-new">{{ entry.price|floatformat:2 }}€</div>
+                {% else %}
+                  <div class="price-new">{{ entry.price|floatformat:2 }}€</div>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="cart-item-actions">
+              <div class="cart-actions">
+                <a
+                  href="{% url 'decrease_quantity' entry.item.pk %}"
+                  class="qty-btn"
+                  aria-label="Decrease quantity"
+                >-</a>
+                <span class="qty-value">{{ entry.item.quantity }}</span>
+                <a
+                  href="{% url 'increase_quantity' entry.item.pk %}"
+                  class="qty-btn"
+                  aria-label="Increase quantity"
+                >+</a>
+              </div>
+
+              <a href="{% url 'remove_from_cart' entry.item.pk %}" class="btn-danger">Fshi</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      <aside class="cart-summary">
+        <div class="cart-summary-total">Total: {{ total|floatformat:2 }}€</div>
+        <div class="cart-summary-actions">
+          <a href="{% url 'home' %}" class="btn-home">Kthehu në Home</a>
+          <a href="{% url 'checkout' %}" class="btn-checkout">Vazhdo me Porosinë</a>
+        </div>
+      </aside>
+    </div>
+
+    <div class="table-wrap">
+      <table class="cart-table">
+        <tr>
           <th>Produkt</th>
           <th>Sasia</th>
           <th>Cmimi</th>
           <th>Veprime</th>
-      </tr>
-      {% for entry in items %}
-      <tr>
-          <td>
+        </tr>
+        {% for entry in items %}
+          <tr>
+            <td>
               {% if entry.item.product.image %}
-              <img src="{{ entry.item.product.image.url }}" alt="{{ entry.item.product.name }}" width="50" height="50">
+                <img src="{{ entry.item.product.image.url }}" alt="{{ entry.item.product.name }}" width="50" height="50">
               {% else %}
-              <img src="https://via.placeholder.com/50" alt="{{ entry.item.product.name }}">
+                <img src="https://via.placeholder.com/50" alt="{{ entry.item.product.name }}">
               {% endif %}
               {{ entry.item.product.name }}
-          </td>
-          <td class="cart-actions">
-              <a href="{% url 'decrease_quantity' entry.item.pk %}" class="btn-secondary">-</a>
-              {{ entry.item.quantity }}
-              <a href="{% url 'increase_quantity' entry.item.pk %}" class="btn-secondary">+</a>
-          </td>
-          <td>
+            </td>
+            <td>
+              <div class="cart-actions">
+                <a href="{% url 'decrease_quantity' entry.item.pk %}" class="qty-btn" aria-label="Decrease quantity">-</a>
+                <span style="font-weight:900;">{{ entry.item.quantity }}</span>
+                <a href="{% url 'increase_quantity' entry.item.pk %}" class="qty-btn" aria-label="Increase quantity">+</a>
+              </div>
+            </td>
+            <td>
               {% if entry.has_discount %}
-                  <span class="price-old">{{ entry.original_price|floatformat:2 }}€</span>
-                  <span class="price-new">{{ entry.price|floatformat:2 }}€</span>
+                <span class="price-old">{{ entry.original_price|floatformat:2 }}€</span>
+                <span class="price-new">{{ entry.price|floatformat:2 }}€</span>
               {% else %}
-                  <span>{{ entry.price|floatformat:2 }}€</span>
+                <span style="font-weight:900;">{{ entry.price|floatformat:2 }}€</span>
               {% endif %}
-          </td>
-          <td class="cart-actions">
+            </td>
+            <td>
               <a href="{% url 'remove_from_cart' entry.item.pk %}" class="btn-danger">Fshi</a>
-          </td>
-      </tr>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div class="cart-cards">
+      {% for entry in items %}
+        <div class="cart-card">
+          <div class="cart-card-top">
+            {% if entry.item.product.image %}
+              <img src="{{ entry.item.product.image.url }}" alt="{{ entry.item.product.name }}">
+            {% else %}
+              <img src="https://via.placeholder.com/50" alt="{{ entry.item.product.name }}">
+            {% endif %}
+            <div class="cart-card-name">{{ entry.item.product.name }}</div>
+          </div>
+
+          <div class="cart-card-row">
+            <div class="cart-card-actions">
+              <a href="{% url 'decrease_quantity' entry.item.pk %}" class="qty-btn" aria-label="Decrease quantity">-</a>
+              <span style="font-weight:900;">{{ entry.item.quantity }}</span>
+              <a href="{% url 'increase_quantity' entry.item.pk %}" class="qty-btn" aria-label="Increase quantity">+</a>
+            </div>
+          </div>
+
+          <div class="cart-card-row" style="margin-top: 10px;">
+            <div>
+              {% if entry.has_discount %}
+                <span class="price-old">{{ entry.original_price|floatformat:2 }}€</span>
+                <span class="price-new">{{ entry.price|floatformat:2 }}€</span>
+              {% else %}
+                <span style="font-weight:900;">{{ entry.price|floatformat:2 }}€</span>
+              {% endif %}
+            </div>
+            <a href="{% url 'remove_from_cart' entry.item.pk %}" class="btn-danger">Fshi</a>
+          </div>
+        </div>
       {% endfor %}
-  </table>
+    </div>
 
-  <div class="total-price">Total: {{ total|floatformat:2 }}€</div>
+    <div class="cart-total">Total: {{ total|floatformat:2 }}€</div>
 
-  <div class="cart-buttons">
+    <div class="cart-buttons">
       <a href="{% url 'home' %}" class="btn-home">Kthehu në Home</a>
-      <a href="{% url 'checkout' %}" class="btn-checkout">Vazhdo me Porosin</a>
-  </div>
+      <a href="{% url 'checkout' %}" class="btn-checkout">Vazhdo me Porosinë</a>
+    </div>
 
   {% else %}
-  <p>Shporta është bosh.</p>
-  <a href="{% url 'home' %}" class="btn-home">Kthehu në Home</a>
+    <p style="text-align:center; color: var(--home-subtle-text); font-weight:700; margin: 30px 0 14px;">
+      Shporta është bosh.
+    </p>
+    <div style="text-align:center;">
+      <a href="{% url 'home' %}" class="btn-home" style="display:inline-flex;">Kthehu në Home</a>
+    </div>
   {% endif %}
+
+  </section>
 </div>
 {% endblock %}
 {% block banner %}{% endblock %}

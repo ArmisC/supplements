@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{% block title %} Supplements {% endblock %}</title>
 
 <style>
@@ -147,11 +148,16 @@ body[data-theme="dark"] {
 }
 
 /* BODY */
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background: var(--bg-page);
   color: var(--text-main);
+  overflow-x: hidden;
 }
 
 /* NAVBAR */
@@ -160,43 +166,92 @@ body {
   align-items: center;
   justify-content: space-between;
   background: var(--nav-bg);
-  padding: 18px 15px;
-  padding-left: 50px;
+  padding: 14px 18px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.35);
   border-bottom: 1px solid var(--nav-border);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(10px);
 }
 
 /* LOGO */
 .logo {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--logo-color);
   text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .logo:hover {
   color: var(--logo-hover);
+  background: var(--home-chip-bg);
+  transform: translateY(-1px);
 }
 
 /* NAV LINKS */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-toggle {
+  display: none;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--theme-toggle-border);
+  border-radius: 12px;
+  background: var(--theme-toggle-bg);
+  color: var(--theme-toggle-text);
+  cursor: pointer;
+}
+
+.nav-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.nav-toggle svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
 #navbar {
   display: flex;
-  gap: 25px;
+  gap: 10px;
   list-style: none;
   margin: 0;
   padding: 0;
+  align-items: center;
 }
 
 #navbar a {
   color: var(--nav-link);
   text-decoration: none;
-  font-weight: 500;
-  padding: 5px 0;
-  transition: 0.3s;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 #navbar a:hover {
   color: var(--nav-link-hover);
+  background: var(--home-chip-bg);
+  transform: translateY(-1px);
+}
+
+#navbar a:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 2px;
 }
 
 /* SIGNUP / LOGIN / LOGOUT / EMAIL */
@@ -204,7 +259,7 @@ body {
   background-color: var(--btn-primary);
   color: #fff;
   padding: 8px 14px;
-  border-radius: 8px;
+  border-radius: 999px;
   text-decoration: none;
   font-weight: 500;
   transition: 0.3s;
@@ -224,7 +279,7 @@ body {
   background-color: var(--btn-primary-hover);
   color: #fff;
   padding: 8px 14px;
-  border-radius: 8px;
+  border-radius: 999px;
   font-weight: 500;
   text-decoration: none;
   transition: 0.3s;
@@ -297,10 +352,12 @@ body[data-theme="dark"] .theme-icon-moon {
   width: 220px;
   background: var(--sidebar-bg);
   min-height: 100vh;
-  padding: 25px;
+  padding: 20px 18px;
   border-right: 1px solid var(--sidebar-border);
   box-shadow: 2px 0 14px rgba(0,0,0,0.25);
   border-radius: 0 12px 12px 0;
+  position: sticky;
+  top: 92px;
 }
 
 .sidebar h3 {
@@ -309,7 +366,7 @@ body[data-theme="dark"] .theme-icon-moon {
   color: var(--sidebar-title);
   text-transform: uppercase;
   letter-spacing: 1px;
-  border-bottom: 1px solid #213252;
+  border-bottom: 1px solid var(--sidebar-border);
   padding-bottom: 5px;
 }
 
@@ -320,18 +377,20 @@ body[data-theme="dark"] .theme-icon-moon {
 }
 
 .sidebar li {
-  margin: 10px 0;
+  margin: 8px 0;
 }
 
 .sidebar a {
   text-decoration: none;
   color: var(--sidebar-link);
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
   display: block;
   padding: 10px 12px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  border-radius: 12px;
+  transition: all 0.2s ease;
   background-color: var(--sidebar-link-bg);
+  border: 1px solid transparent;
 }
 
 .sidebar a:hover {
@@ -339,11 +398,18 @@ body[data-theme="dark"] .theme-icon-moon {
   color: #fff;
   padding-left: 16px;
   box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  border-color: rgba(96, 165, 250, 0.35);
+}
+
+.sidebar a:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 2px;
 }
 
 /* CONTENT AREA */
 .content-area {
   flex: 1;
+  min-width: 0;
 }
 
 /* BANNER */
@@ -506,20 +572,23 @@ body[data-theme="dark"] .theme-icon-moon {
   height: 35px;
   border-radius: 50%;
   background: var(--social-bg);
+  color: var(--social-icon);
   transition: 0.3s;
 }
 
 .socials a svg {
-  width: 16px;
-  height: 16px;
-  fill: var(--social-icon);
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .socials a:hover {
   background: var(--social-hover-bg);
-  svg {
-    fill: #0077b6;
-  }
+  color: #0077b6;
 }
 
 .footer-bottom {
@@ -531,21 +600,111 @@ body[data-theme="dark"] .theme-icon-moon {
   color: var(--footer-text);
 }
 
+@media (max-width: 1024px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .navbar {
+    padding: 12px 14px;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #navbar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--nav-bg);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 70px 18px 18px;
+    border-right: 1px solid var(--nav-border);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+    transition: left 0.25s ease;
+    z-index: 60;
+  }
+
+  #navbar.open {
+    left: 0;
+  }
+
+  #navbar a {
+    width: 100%;
+    background: var(--sidebar-link-bg);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+
+  .container {
+    display: block;
+  }
+
+  .sidebar {
+    position: static;
+    width: 100%;
+    min-height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--sidebar-border);
+    border-radius: 0;
+  }
+
+  .user-email {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    padding: 16px;
+  }
+
+  .banner {
+    margin: 10px;
+    height: 220px;
+  }
+
+  .banner-text {
+    left: 18px;
+  }
+
+  .banner-text h1 {
+    font-size: 22px;
+  }
+}
+
 
 .user-controls {
   display: flex;
   align-items: center;
-  gap: 7px; /* hapësirë mes login dhe cart */
+  gap: 10px; /* space between login and cart */
 }
 
 .cart-icon {
   display: flex;
   align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--nav-border);
+  background: var(--home-chip-bg);
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 
 .cart-icon img {
-  width: 40px;   /* tash përputhet me tekst */
-  height: 40px;
+  width: 26px;
+  height: 26px;
   object-fit: contain;
   cursor: pointer;
   transition: 0.3s;
@@ -556,6 +715,11 @@ body[data-theme="dark"] .theme-icon-moon {
 }
 .cart-icon {
   position: relative;
+}
+
+.cart-icon:hover {
+  transform: translateY(-1px);
+  border-color: var(--nav-link-hover);
 }
 
 .cart-badge {
@@ -582,13 +746,17 @@ body[data-theme="dark"] .theme-icon-moon {
 
 <!-- NAVBAR -->
 <div class="navbar">
-    <a href="{% url 'home' %}" class="logo">MusclePower.ks</a>
+    <div class="nav-left">
+      <button type="button" id="mobileNavToggle" class="nav-toggle" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
+      <a href="{% url 'home' %}" class="logo">MusclePower.ks</a>
+    </div>
     <ul id='navbar'>
         <li><a href="{% url 'home' %}">Home</a></li>
         <li><a href="{% url 'discounts' %}">Discounts</a></li>
-
-<!--        <li><a href="{% url 'goals' %}">Goals</a></li>-->
-<!--        <li><a href="#">Brands</a></li>-->
         <li><a href="{% url 'contact' %}">Contact</a></li>
         {% if request.session.user %}
         {% if request.session.user.role == 'A' %}
@@ -660,18 +828,12 @@ body[data-theme="dark"] .theme-icon-moon {
 
   <!-- SIDEBAR -->{% block side %}
   <div class="sidebar">
-    <h3>Categories</h3>
+    <h3>Shop by Category</h3>
     <ul>
+      <li><a href="{% url 'home' %}">All Products</a></li>
       {% for category, label in categories %}
         <li><a href="{% url 'home_with_category' category %}">{{ label }}</a></li>
       {% endfor %}
-    </ul>
-
-    <h3>Brands</h3>
-    <ul>
-      <li><a href="">MyProtein</a></li>
-      <li><a href="">Optimum Nutrition</a></li>
-      <li><a href="">BSN</a></li>
     </ul>
   </div>{% endblock %}
 
@@ -734,9 +896,8 @@ body[data-theme="dark"] .theme-icon-moon {
       <h4>Quick Links</h4>
       <ul>
         <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="">Shop</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="{% url 'discounts' %}">Discounts</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
       </ul>
     </div>
 
@@ -744,21 +905,9 @@ body[data-theme="dark"] .theme-icon-moon {
        <div class="footer-section">
       <h4>Categories</h4>
       <ul>
-        <li><a href="">Protein</a></li>
-        <li><a href="">Creatine</a></li>
-        <li><a href="#">Pre-workout</a></li>
-        <li><a href="#">Vitamins</a></li>
-      </ul>
-    </div>
-
-
-      <div class="footer-section">
-      <h4>Brands</h4>
-      <ul>
-        <li><a href="">Applied Nutrition</a></li>
-        <li><a href="">ABE</a></li>
-        <li><a href="#"></a></li>
-        <li><a href="#"></a></li>
+        {% for category, label in categories %}
+          <li><a href="{% url 'home_with_category' category %}">{{ label }}</a></li>
+        {% endfor %}
       </ul>
     </div>
 
@@ -767,15 +916,18 @@ body[data-theme="dark"] .theme-icon-moon {
       <h4>Follow Us</h4>
       <div class="socials">
         <!-- Facebook SVG -->
-        <a href="#" target="_blank">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-            <path d="M279.14 288l14.22-92.66h-88.91V127.4c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.36 0 225.36 0c-73.5 0-121.36 44.38-121.36 124.72V195.3H22.89V288h81.11v224h100.2V288z"/>
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v9h4v-9h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
           </svg>
         </a>
+
         <!-- Instagram SVG -->
-        <a href="#" target="_blank">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-            <path d="M224.1 141c-63.6 0-115 51.4-115 115s51.4 115 115 115 115-51.4 115-115-51.4-115-115-115zm0 190c-41.4 0-75-33.6-75-75s33.6-75 75-75 75 33.6 75 75-33.6 75-75 75zm146.4-194.3c0 14.9-12 26.9-26.9 26.9s-26.9-12-26.9-26.9 12-26.9 26.9-26.9 26.9 12 26.9 26.9zm76.1 27.2c-.1-54.5-4.9-97.3-28-132.4-23.6-36.5-54.7-66.2-91.1-89.9C330.8 7.5 287.1 2.7 232.6 2.6c-54.5.1-97.3 4.9-132.4 28-36.5 23.6-66.2 54.7-89.9 91.1C7.5 121.2 2.7 164.9 2.6 219.4c.1 54.5 4.9 97.3 28 132.4 23.6 36.5 54.7 66.2 91.1 89.9 35.1 23.1 77.8 28 132.4 28 54.5-.1 97.3-4.9 132.4-28 36.5-23.6 66.2-54.7 89.9-91.1 23.1-35.1 28-77.8 28-132.4-.1-54.5-4.9-97.3-28-132.4z"/>
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+            <path d="M16 11.37a4 4 0 1 1-7.74 0 4 4 0 0 1 7.74 0z" />
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
           </svg>
         </a>
       </div>
@@ -792,6 +944,8 @@ body[data-theme="dark"] .theme-icon-moon {
     const THEME_KEY = 'musclepower-theme';
     const body = document.body;
     const toggleBtn = document.getElementById('themeToggle');
+    const navMenu = document.getElementById('navbar');
+    const navToggle = document.getElementById('mobileNavToggle');
 
     function setTheme(theme) {
       body.setAttribute('data-theme', theme);
@@ -811,6 +965,18 @@ body[data-theme="dark"] .theme-icon-moon {
         const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
         setTheme(nextTheme);
         localStorage.setItem(THEME_KEY, nextTheme);
+      });
+    }
+
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', function () {
+        navMenu.classList.toggle('open');
+      });
+
+      navMenu.addEventListener('click', function (event) {
+        if (event.target.tagName === 'A') {
+          navMenu.classList.remove('open');
+        }
       });
     }
   })();

@@ -116,11 +116,6 @@ def login(request):
 def signup(request):
     return render(request, 'product/signup.html')
 
-def shop(request):
-    products = Product.objects.all()
-    context = {'products': products, 'categories': SUPPLEMENT_TYPES}
-    return render(request, 'product/shop.html', context=context)
-
 def discounts(request):
     products = Product.objects.all()
     context = {'products': products, 'categories': SUPPLEMENT_TYPES}
@@ -188,7 +183,15 @@ def cart_view(request):
             'original_price': product.price
         })
 
-    return render(request, 'product/cart.html', {'items': cart_items, 'total': total})
+    return render(
+        request,
+        'product/cart.html',
+        {
+            'items': cart_items,
+            'total': total,
+            'categories': SUPPLEMENT_TYPES,
+        }
+    )
 
 def remove_from_cart(request, pk):
     user = get_current_user(request)

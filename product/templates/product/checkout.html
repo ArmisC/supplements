@@ -3,216 +3,336 @@
 
 {% block content %}
 <style>
-.checkout-container {
-  max-width: 900px;
-  margin: 40px auto;
-  background: var(--surface-primary);
-  padding: 30px;
-  border-radius: 12px;
-  border: 1px solid var(--border-soft);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.14);
-}
-
-.checkout-container h1 {
-  text-align: center;
-  color: var(--accent);
-  margin-bottom: 25px;
-}
-
-/* ERROR */
-.error-box {
-  background: rgba(239, 68, 68, 0.15);
-  color: #fca5a5;
-  border: 1px solid rgba(239, 68, 68, 0.35);
-  padding:12px;
-  border-radius:8px;
-  margin-bottom:20px;
-  text-align:center;
-  font-weight:500;
-}
-
-/* GRID */
-.checkout-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 25px;
-}
-
-/* FORM */
-.checkout-form input,
-.checkout-form select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid var(--border-soft);
-  background: var(--input-bg);
-  color: var(--text-main);
-}
-
-.checkout-form label {
-  font-size: 14px;
-  color: var(--text-main);
-}
-
-.checkout-form button {
-  width: 100%;
-  padding: 12px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.checkout-form button:hover {
-  background: var(--accent-hover);
-}
-
-.checkout-form button:disabled {
-  background: gray;
-  cursor: not-allowed;
-}
-
-/* ORDER SUMMARY */
-.summary {
-  background: var(--surface-secondary);
-  border: 1px solid var(--border-soft);
-  padding: 20px;
-  border-radius: 12px;
-}
-
-.summary h3 {
-  margin-bottom: 15px;
-  color: var(--accent);
-}
-
-.summary-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.total {
-  font-weight: bold;
-  font-size: 18px;
-  color: var(--accent);
-  margin-top: 15px;
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .checkout-grid {
-    grid-template-columns: 1fr;
+  .checkout-page {
+    max-width: 1100px;
+    margin: 34px auto 10px;
+    padding: 0 10px;
   }
-}
+
+  .checkout-shell {
+    background: var(--home-surface);
+    border: 1px solid var(--home-surface-border);
+    border-radius: 18px;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+    padding: 20px;
+  }
+
+  .checkout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .checkout-header h1 {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--home-heading);
+    font-weight: 900;
+  }
+
+  .checkout-header p {
+    margin: 8px 0 0;
+    color: var(--home-subtle-text);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .error-box {
+    background: rgba(239, 68, 68, 0.12);
+    color: #fecaca;
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    text-align: center;
+    font-weight: 800;
+    line-height: 1.4;
+  }
+
+  .checkout-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-field.full {
+    grid-column: 1 / -1;
+  }
+
+  .form-field label {
+    font-weight: 900;
+    font-size: 13px;
+    color: var(--home-heading);
+  }
+
+  .form-field input,
+  .form-field select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    min-height: 42px;
+    line-height: 1.35;
+    border: 1px solid var(--home-surface-border);
+    border-radius: 10px;
+    font-size: 14px;
+    background: var(--home-subtle-bg);
+    color: var(--home-heading);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .form-field input:focus,
+  .form-field select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+  }
+
+  .checkout-actions {
+    margin-top: 4px;
+  }
+
+  .btn-submit {
+    width: 100%;
+    border-radius: 10px;
+    font-weight: 900;
+    font-size: 13px;
+    padding: 12px 16px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-submit:hover:not(:disabled) {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn-submit:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  .summary {
+    border: 1px solid var(--home-surface-border);
+    background: var(--home-subtle-bg);
+    border-radius: 16px;
+    padding: 14px;
+    position: sticky;
+    top: 110px;
+  }
+
+  .summary h3 {
+    margin: 0 0 12px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--home-subtle-text);
+    font-weight: 900;
+  }
+
+  .summary-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .summary-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--home-heading);
+    font-weight: 800;
+  }
+
+  .summary-line span:last-child {
+    color: var(--accent);
+    font-weight: 900;
+  }
+
+  .summary-total {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--home-surface-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 900;
+    color: var(--home-heading);
+  }
+
+  .summary-total strong {
+    color: var(--accent);
+  }
+
+  @media (max-width: 900px) {
+    .checkout-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .summary {
+      position: static;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .checkout-actions .btn-submit {
+      font-size: 14px;
+    }
+  }
 </style>
 
-<div class="checkout-container">
-  <h1>Pagesa</h1>
-
-  {% if error %}
-    <div class="error-box">
-        {{ error }}
-    </div>
-  {% endif %}
-
-  <div class="checkout-grid">
-
-    <!-- LEFT: FORM -->
-    <form method="POST" class="checkout-form">
-      {% csrf_token %}
-
-      <h3>Të dhënat e klientit</h3>
-
-      <label>Emri i plotë</label>
-      <input type="text" name="name" required>
-
-      <label>Email</label>
-      <input type="email" name="email" required>
-
-      <label>Telefoni</label>
-      <input type="text" name="phone" required>
-
-      <label>Adresa</label>
-      <input type="text" name="address" required>
-
-      <label>Shteti</label>
-      <select name="country" id="country" required>
-        <option value="">Zgjedh shtetin</option>
-        <option value="Kosovo">Kosovë</option>
-        <option value="Albania">Shqipëri</option>
-      </select>
-
-      <label>Qyteti</label>
-      <select name="city" id="city" required>
-        <option value="">Zgjedh qytetin</option>
-      </select>
-
-      <button type="submit" {% if error %}disabled{% endif %}>
-        Beje Porosin
-      </button>
-    </form>
-
-    <!-- RIGHT: SUMMARY -->
-    <div class="summary">
-      <h3>Përmbledhje</h3>
-
-      {% for entry in items %}
-      <div class="summary-item">
-        <span>{{ entry.item.product.name }} x{{ entry.item.quantity }}</span>
-        <span>{{ entry.price|floatformat:2 }}€</span>
-      </div>
-      {% endfor %}
-
-      <div class="total">
-        Total: {{ total|floatformat:2 }}€
+<div class="checkout-page">
+  <section class="checkout-shell">
+    <div class="checkout-header">
+      <div>
+        <h1>Pagesa</h1>
+        <p>Plotëso të dhënat e porosisë.</p>
       </div>
     </div>
 
-  </div>
+    {% if error %}
+      <div class="error-box">{{ error }}</div>
+    {% endif %}
+
+    <div class="checkout-grid">
+      <form method="POST" class="checkout-form">
+        {% csrf_token %}
+
+        <div class="form-grid">
+          <div class="form-field full">
+            <label>Emri i plotë</label>
+            <input type="text" name="name" required>
+          </div>
+
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" name="email" required>
+          </div>
+
+          <div class="form-field">
+            <label>Telefoni</label>
+            <input type="text" name="phone" required>
+          </div>
+
+          <div class="form-field full">
+            <label>Adresa</label>
+            <input type="text" name="address" required>
+          </div>
+
+          <div class="form-field">
+            <label>Shteti</label>
+            <select name="country" id="country" required>
+              <option value="">Zgjedh shtetin</option>
+              <option value="Kosovo">Kosovë</option>
+              <option value="Albania">Shqipëri</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label>Qyteti</label>
+            <select name="city" id="city" required>
+              <option value="">Zgjedh qytetin</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="checkout-actions">
+          <button type="submit" class="btn-submit" {% if error %}disabled{% endif %}>
+            Beje Porosin
+          </button>
+        </div>
+      </form>
+
+      <aside class="summary">
+        <h3>Përmbledhje</h3>
+
+        <div class="summary-items">
+          {% for entry in items %}
+            <div class="summary-line">
+              <span>{{ entry.item.product.name }} x{{ entry.item.quantity }}</span>
+              <span>{{ entry.price|floatformat:2 }}€</span>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="summary-total">
+          <span>Total</span>
+          <strong>{{ total|floatformat:2 }}€</strong>
+        </div>
+      </aside>
+    </div>
+  </section>
 </div>
 
 <script>
-const cities = {
+  const cities = {
     Kosovo: [
-        "Prishtinë","Prizren","Pejë","Gjakovë","Ferizaj","Gjilan","Mitrovicë","Podujevë",
-        "Vushtrri","Suharekë","Rahovec","Drenas","Lipjan","Kaçanik","Deçan","Istog",
-        "Klinë","Malishevë","Skenderaj","Dragash","Fushë Kosovë","Obiliq",
-        "Shtime","Novobërdë","Partesh","Ranillug","Kllokot","Graçanicë",
-        "Zveçan","Leposaviq","Zubin Potok"
+      "Prishtinë","Prizren","Pejë","Gjakovë","Ferizaj","Gjilan","Mitrovicë","Podujevë",
+      "Vushtrri","Suharekë","Rahovec","Drenas","Lipjan","Kaçanik","Deçan","Istog",
+      "Klinë","Malishevë","Skenderaj","Dragash","Fushë Kosovë","Obiliq",
+      "Shtime","Novobërdë","Partesh","Ranillug","Kllokot","Graçanicë",
+      "Zveçan","Leposaviq","Zubin Potok"
     ],
     Albania: [
-        "Tiranë","Durrës","Vlorë","Shkodër","Elbasan","Fier","Korçë","Berat",
-        "Lushnjë","Pogradec","Kavajë","Gjirokastër","Sarandë","Kukës",
-        "Lezhë","Laç","Patos","Ballsh","Burrel","Krujë","Librazhd",
-        "Gramsh","Tepelenë","Përmet","Delvinë","Himarë","Bulqizë",
-        "Rrëshen","Pukë","Bajram Curri","Roskovec","Divjakë","Memaliaj"
+      "Tiranë","Durrës","Vlorë","Shkodër","Elbasan","Fier","Korçë","Berat",
+      "Lushnjë","Pogradec","Kavajë","Gjirokastër","Sarandë","Kukës",
+      "Lezhë","Laç","Patos","Ballsh","Burrel","Krujë","Librazhd",
+      "Gramsh","Tepelenë","Përmet","Delvinë","Himarë","Bulqizë",
+      "Rrëshen","Pukë","Bajram Curri","Roskovec","Divjakë","Memaliaj"
     ]
-};
+  };
 
-const countrySelect = document.getElementById("country");
-const citySelect = document.getElementById("city");
+  const countrySelect = document.getElementById("country");
+  const citySelect = document.getElementById("city");
 
-countrySelect.addEventListener("change", function() {
+  countrySelect.addEventListener("change", function () {
     const selectedCountry = this.value;
-
     citySelect.innerHTML = '<option value="">Zgjedh qytetin</option>';
 
     if (cities[selectedCountry]) {
-        cities[selectedCountry].forEach(function(city) {
-            const option = document.createElement("option");
-            option.value = city;
-            option.textContent = city;
-            citySelect.appendChild(option);
-        });
+      cities[selectedCountry].forEach(function (city) {
+        const option = document.createElement("option");
+        option.value = city;
+        option.textContent = city;
+        citySelect.appendChild(option);
+      });
     }
-});
+  });
 </script>
-
 {% endblock %}
 
 {% block banner %}{% endblock %}
 {% block sidebar %}{% endblock %}
 {% block side %}{% endblock %}
+

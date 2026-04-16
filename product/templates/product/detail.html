@@ -3,127 +3,347 @@
 
 {% block content %}
 <style>
-    .product-detail {
-        max-width: 600px;
-        margin: 50px auto;
-        border: 1px solid var(--border-soft);
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-        background: var(--surface-primary);
-        display: flex;
-        flex-direction: column;
-        position: relative;
+  .detail-page {
+    max-width: 1100px;
+    margin: 34px auto 10px;
+    color: var(--home-heading);
+  }
+
+  .detail-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 16px;
+    text-decoration: none;
+    color: var(--home-subtle-text);
+    font-size: 13px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+
+  .detail-back:hover {
+    color: var(--home-pill-hover);
+  }
+
+  .detail-shell {
+    background: var(--home-surface);
+    border: 1px solid var(--home-surface-border);
+    border-radius: 18px;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+    overflow: hidden;
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 0;
+  }
+
+  .detail-media {
+    position: relative;
+    background: linear-gradient(180deg, var(--home-subtle-bg), var(--home-surface));
+    border-right: 1px solid var(--home-surface-border);
+    min-height: 470px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .detail-media img {
+    width: 100%;
+    max-width: 470px;
+    max-height: 430px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .discount-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: #ef4444;
+    color: #fff;
+    border-radius: 999px;
+    padding: 6px 11px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+  }
+
+  .detail-content {
+    padding: 24px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .meta-pill {
+    background: var(--home-chip-bg);
+    color: var(--home-chip-text);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .detail-title {
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.2;
+    color: var(--home-heading);
+  }
+
+  .detail-description {
+    margin: 0;
+    color: var(--home-subtle-text);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .price-block {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .price-main {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--home-heading);
+    line-height: 1;
+  }
+
+  .price-old {
+    font-size: 17px;
+    color: var(--home-subtle-text);
+    text-decoration: line-through;
+  }
+
+  .detail-facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .fact-card {
+    border: 1px solid var(--home-surface-border);
+    background: var(--home-subtle-bg);
+    border-radius: 12px;
+    padding: 10px 11px;
+  }
+
+  .fact-label {
+    display: block;
+    font-size: 11px;
+    color: var(--home-subtle-text);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+
+  .fact-value {
+    font-size: 14px;
+    color: var(--home-heading);
+    font-weight: 700;
+    word-break: break-word;
+  }
+
+  .stock-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-top: 1px solid var(--home-surface-border);
+    padding-top: 12px;
+    margin-top: 4px;
+  }
+
+  .stock-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    background: var(--home-chip-bg);
+    color: var(--home-chip-text);
+  }
+
+  .stock-chip.low {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+  }
+
+  .stock-chip.out {
+    background: rgba(100, 116, 139, 0.24);
+    color: var(--home-subtle-text);
+  }
+
+  .created {
+    font-size: 12px;
+    color: var(--home-subtle-text);
+  }
+
+  .actions-row {
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .btn-primary,
+  .btn-outline,
+  .btn-danger,
+  .btn-disabled {
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 9px 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: #1e40af;
+    border-color: #1e40af;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border-color: var(--home-surface-border);
+    color: var(--home-heading);
+  }
+
+  .btn-outline:hover {
+    background: var(--home-chip-bg);
+  }
+
+  .btn-danger {
+    background: #dc2626;
+    color: #fff;
+    border-color: #dc2626;
+  }
+
+  .btn-danger:hover {
+    background: #b91c1c;
+    border-color: #b91c1c;
+  }
+
+  .btn-disabled {
+    background: #334155;
+    border-color: #334155;
+    color: #b9c7de;
+    cursor: not-allowed;
+    opacity: 0.75;
+  }
+
+  .delete-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 16px;
+  }
+
+  .delete-modal.open {
+    display: flex;
+  }
+
+  .delete-modal-card {
+    width: min(420px, 100%);
+    background: var(--home-surface);
+    border: 1px solid var(--home-surface-border);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+  }
+
+  .delete-modal-card h3 {
+    margin: 0 0 8px;
+    color: var(--home-heading);
+  }
+
+  .delete-modal-card p {
+    margin: 0;
+    color: var(--home-subtle-text);
+    line-height: 1.5;
+  }
+
+  .delete-modal-actions {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  @media (max-width: 980px) {
+    .detail-grid {
+      grid-template-columns: 1fr;
     }
 
-    /* FIX: foto jo me u crop */
-    .product-detail img {
-        width: 100%;
-        height: 300px;
-        object-fit: contain;   /* KJO E RREGULLON */
-        background: var(--surface-secondary);   /* duket ma bukur kur ka boshllëk */
-        border-radius: 8px;
+    .detail-media {
+      min-height: 330px;
+      border-right: none;
+      border-bottom: 1px solid var(--home-surface-border);
+      padding: 16px;
     }
 
-    .product-detail h1 {
-        margin-top: 15px;
-        font-size: 26px;
+    .detail-content {
+      padding: 18px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .detail-page {
+      margin-top: 20px;
     }
 
-    .product-detail p {
-        font-size: 16px;
-        margin: 8px 0;
+    .detail-title {
+      font-size: 25px;
     }
 
-    .price {
-        font-weight: bold;
-        font-size: 22px;
+    .price-main {
+      font-size: 28px;
     }
 
-    .price-old {
-        text-decoration: line-through;
-        color: var(--text-muted);
-        margin-right: 10px;
+    .detail-facts {
+      grid-template-columns: 1fr;
     }
-
-    .price-new {
-        color: var(--accent);
-    }
-
-    .discount-badge {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        background: #ef4444;
-        color: #fff;
-        padding: 5px 10px;
-        font-size: 14px;
-        font-weight: bold;
-        border-radius: 6px;
-    }
-
-    .bottom-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 15px;
-    }
-
-    .btn-update {
-        padding: 8px 16px;
-        background-color: var(--accent);
-        color: #fff;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: background 0.3s;
-        font-size: 14px;
-        display: inline-block;
-        cursor: pointer;
-    }
-
-    .btn-update:hover {
-        background-color: var(--accent-hover);
-    }
-
-    .btn-delete {
-        padding: 8px 16px;
-        background-color: var(--danger);
-        color: #fff;
-        border-radius: 8px;
-        font-weight: bold;
-        text-decoration: none;
-        display: inline-block;
-        cursor: pointer;
-        transition: background 0.3s;
-        font-size: 14px;
-        border: none;
-    }
-
-    .btn-delete:hover {
-        background-color: var(--danger-hover);
-    }
-
-    .btn-group {
-        display: flex;
-        gap: 10px;
-    }
-
-    .btn-out {
-        padding: 8px 16px;
-        background-color: #475569;
-        color: #fff;
-        border-radius: 8px;
-        font-weight: bold;
-        border: none;
-        cursor: not-allowed;
-        font-size: 14px;
-        opacity: 0.7;
-    }
-
+  }
 </style>
 
-<div class="product-detail">
+<div class="detail-page">
+  <a href="{% url 'home' %}" class="detail-back" aria-label="Back to products">← Back to products</a>
+
+  <section class="detail-shell">
+    <div class="detail-grid">
+      <div class="detail-media">
     {% if product.discount_percent %}
         <span class="discount-badge">-{{ product.discount_percent }}%</span>
     {% endif %}
@@ -131,61 +351,83 @@
     {% if product.image %}
         <img src="{{ product.image.url }}" alt="{{ product.name }}">
     {% else %}
-        <img src="https://via.placeholder.com/600x300">
+        <img src="https://via.placeholder.com/600x300" alt="{{ product.name }}">
     {% endif %}
+      </div>
 
-    <h1>{{ product.name }}</h1>
-    <p class="category"><strong>Category:</strong> {{ product.category }}</p>
-    <p class="brand"><strong>Brand:</strong> {{ product.brand }}</p>
-    <p class="description">{{ product.description }}</p>
+      <div class="detail-content">
+        <div class="meta-row">
+          <span class="meta-pill">{{ product.category }}</span>
+          <span class="meta-pill">{{ product.brand }}</span>
+        </div>
 
-    <p class="price">
+        <h1 class="detail-title">{{ product.name }}</h1>
+        <p class="detail-description">{{ product.description }}</p>
+
+        <div class="price-block">
         {% if product.discount_percent %}
             <span class="price-old">{{ product.price }}€</span>
-            <span class="price-new">{{ product.get_discount_price }}€</span>
+            <span class="price-main">{{ product.get_discount_price }}€</span>
         {% else %}
-            {{ product.price }}€
+            <span class="price-main">{{ product.price }}€</span>
         {% endif %}
-    </p>
+        </div>
 
-    <p class="weight"><strong>Weight:</strong> {{ product.weight }}Kg</p>
-    <p class="flavor"><strong>Flavor:</strong> {{ product.flavor }}</p>
-    <p class="stock"><strong>Stock:</strong> {{ product.stock }}</p>
+        <div class="detail-facts">
+          <div class="fact-card">
+            <span class="fact-label">Weight</span>
+            <span class="fact-value">{{ product.weight }}kg</span>
+          </div>
+          <div class="fact-card">
+            <span class="fact-label">Flavor</span>
+            <span class="fact-value">{{ product.flavor }}</span>
+          </div>
+          <div class="fact-card">
+            <span class="fact-label">Brand</span>
+            <span class="fact-value">{{ product.brand }}</span>
+          </div>
+        </div>
 
-<div class="bottom-row">
-    <p class="created" style="color: var(--text-muted);">
-        <strong>Added on:</strong> {{ product.created_at|date:"d M Y" }}
-    </p>
+        <div class="stock-row">
+          {% if product.stock > 10 %}
+            <span class="stock-chip">In stock: {{ product.stock }}</span>
+          {% elif product.stock > 0 %}
+            <span class="stock-chip low">Low stock: {{ product.stock }}</span>
+          {% else %}
+            <span class="stock-chip out">Out of stock</span>
+          {% endif %}
+          <span class="created">Added on {{ product.created_at|date:"d M Y" }}</span>
+        </div>
 
-    <div class="btn-group">
+        <div class="actions-row">
+          {% if product.stock > 0 %}
+            <a href="{% url 'add_to_cart' product.pk %}" class="btn-primary">Add to Cart</a>
+          {% else %}
+            <span class="btn-disabled">Out of Stock</span>
+          {% endif %}
 
         {% if is_admin %}
-            <a href="{% url 'update_product' product.pk %}" class="btn-update">Update</a>
-            <button id="deleteBtn" class="btn-delete">Delete Product</button>
+            <a href="{% url 'update_product' product.pk %}" class="btn-outline">Update</a>
+            <button id="deleteBtn" type="button" class="btn-danger">Delete Product</button>
         {% endif %}
-
-        {% if product.stock > 0 %}
-            <a href="{% url 'add_to_cart' product.pk %}" class="btn-update">Add to Cart</a>
-        {% else %}
-            <button disabled class="btn-out">
-                Out of Stock
-            </button>
-        {% endif %}
-
+        </div>
+      </div>
     </div>
-</div>
+  </section>
 </div>
 
 {% if is_admin %}
-<div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:var(--overlay); justify-content:center; align-items:center;">
-  <div style="background:var(--surface-primary); border:1px solid var(--border-soft); padding:30px; border-radius:12px; text-align:center; width:300px; position:relative;">
+<div id="deleteModal" class="delete-modal">
+  <div class="delete-modal-card">
     <h3>Are you sure?</h3>
     <p>You are about to delete {{ product.name }}.</p>
 
     <form method="POST" action="{% url 'delete_product' product.pk %}">
       {% csrf_token %}
-      <button type="submit" style="background:var(--accent);color:#fff;padding:10px 15px;border:none;border-radius:6px;cursor:pointer;">Yes, Delete</button>
-      <button type="button" id="cancelBtn" style="background:var(--surface-secondary);color:var(--text-main);padding:10px 15px;border:1px solid var(--border-soft);border-radius:6px;cursor:pointer;margin-left:10px;">Cancel</button>
+      <div class="delete-modal-actions">
+        <button type="button" id="cancelBtn" class="btn-outline">Cancel</button>
+        <button type="submit" class="btn-danger">Yes, Delete</button>
+      </div>
     </form>
   </div>
 </div>
@@ -197,19 +439,19 @@
 
   if(deleteBtn){
     deleteBtn.addEventListener('click', () => {
-      modal.style.display = 'flex';
+      modal.classList.add('open');
     });
   }
 
   if(cancelBtn){
     cancelBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
+      modal.classList.remove('open');
     });
   }
 
   window.addEventListener('click', (e) => {
     if(e.target === modal) {
-      modal.style.display = 'none';
+      modal.classList.remove('open');
     }
   });
 </script>
