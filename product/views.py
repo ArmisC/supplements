@@ -24,8 +24,8 @@ def get_current_user(request):
 
 
 def home(request):
-    products = Product.objects.all()
-    paginator = Paginator(products, 5)
+    products = Product.objects.order_by('?')
+    paginator = Paginator(products, 12)
     page = request.GET.get('page')
     products = paginator.get_page(page)
     context = {'products':products, 'categories': SUPPLEMENT_TYPES}
@@ -34,7 +34,10 @@ def home(request):
 
 def home_with_category(request, category):
     categories = dict(SUPPLEMENT_TYPES)
-    products = Product.objects.filter(category=categories[category])
+    products = Product.objects.filter(category=categories[category]).order_by('?')
+    paginator = Paginator(products, 12)
+    page = request.GET.get('page')
+    products = paginator.get_page(page)
     context = {'products': products, 'categories': SUPPLEMENT_TYPES}
     return render(request,'product/home.html',context=context)
 
@@ -117,18 +120,21 @@ def signup(request):
     return render(request, 'product/signup.html')
 
 def discounts(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(discount_percent__gt=0).order_by('?')
+    paginator = Paginator(products, 12)
+    page = request.GET.get('page')
+    products = paginator.get_page(page)
     context = {'products': products, 'categories': SUPPLEMENT_TYPES}
     return render(request, 'product/discounts.html', context=context)
 
 def contact(request):
-    products = Product.objects.all()
+    products = Product.objects.order_by('?')
     context = {'products': products, 'categories': SUPPLEMENT_TYPES}
     return render(request, 'product/contact.html', context=context)
 
 
 def goals(request):
-    products = Product.objects.all()
+    products = Product.objects.order_by('?')
     context = {'products': products, 'categories': SUPPLEMENT_TYPES}
     return render(request, 'product/goals.html', context=context)
 
