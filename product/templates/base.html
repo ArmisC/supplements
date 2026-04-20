@@ -166,22 +166,23 @@ body {
   align-items: center;
   justify-content: space-between;
   background: var(--nav-bg);
-  padding: 14px 18px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  padding: 12px 18px;
+  box-shadow: 0 10px 24px rgba(2, 8, 23, 0.12);
   border-bottom: 1px solid var(--nav-border);
   position: sticky;
   top: 0;
   z-index: 40;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
 }
 
 /* LOGO */
 .logo {
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 800;
   color: var(--logo-color);
   text-decoration: none;
-  padding: 8px 12px;
+  letter-spacing: 0.2px;
+  padding: 7px 12px;
   border-radius: 999px;
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
@@ -196,7 +197,7 @@ body {
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .nav-toggle {
@@ -224,7 +225,7 @@ body {
 
 #navbar {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -235,18 +236,51 @@ body {
   color: var(--nav-link);
   text-decoration: none;
   font-weight: 600;
-  padding: 8px 12px;
+  font-size: 14px;
+  padding: 9px 13px;
   border-radius: 999px;
   background: transparent;
+  border: 1px solid transparent;
   display: inline-flex;
   align-items: center;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  position: relative;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 #navbar a:hover {
   color: var(--nav-link-hover);
   background: var(--home-chip-bg);
+  border-color: rgba(37, 99, 235, 0.35);
   transform: translateY(-1px);
+}
+
+#navbar a::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 5px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 999px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+#navbar a:hover::after {
+  transform: scaleX(1);
+}
+
+#navbar a.active {
+  color: #fff;
+  background: var(--btn-primary);
+  border-color: var(--btn-primary);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
+}
+
+#navbar a.active::after {
+  transform: scaleX(1);
 }
 
 #navbar a:focus-visible {
@@ -258,35 +292,45 @@ body {
 .btn-login {
   background-color: var(--btn-primary);
   color: #fff;
-  padding: 8px 14px;
+  padding: 9px 14px;
   border-radius: 999px;
   text-decoration: none;
-  font-weight: 500;
-  transition: 0.3s;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  border: 1px solid transparent;
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-login:hover {
   background-color: var(--btn-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
 }
 
 .user-controls {
   display: flex;
   align-items: center;
   gap: 10px; /* afron email dhe logout */
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .user-email {
   background-color: var(--btn-primary-hover);
   color: #fff;
-  padding: 8px 14px;
+  padding: 9px 14px;
   border-radius: 999px;
   font-weight: 500;
   text-decoration: none;
-  transition: 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .user-email:hover {
   background-color: #1e40af;
+  transform: translateY(-1px);
 }
 
 .theme-toggle {
@@ -301,12 +345,14 @@ body {
   justify-content: center;
   font-size: 16px;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
   position: relative;
   overflow: hidden;
 }
 
 .theme-toggle:hover {
+  border-color: rgba(37, 99, 235, 0.35);
+  background: var(--home-chip-bg);
   transform: translateY(-1px);
 }
 
@@ -345,6 +391,7 @@ body[data-theme="dark"] .theme-icon-moon {
 /* LAYOUT */
 .container {
   display: flex;
+  gap: 18px;
 }
 
 /* SIDEBAR MODERN */
@@ -352,22 +399,23 @@ body[data-theme="dark"] .theme-icon-moon {
   width: 220px;
   background: var(--sidebar-bg);
   min-height: 100vh;
-  padding: 20px 18px;
-  border-right: 1px solid var(--sidebar-border);
-  box-shadow: 2px 0 14px rgba(0,0,0,0.25);
-  border-radius: 0 12px 12px 0;
+  padding: 18px 14px;
+  border: 1px solid var(--sidebar-border);
+  box-shadow: 0 14px 30px rgba(2, 8, 23, 0.1);
+  border-radius: 14px;
   position: sticky;
-  top: 92px;
+  top: 88px;
+  margin: 12px 0 0 12px;
 }
 
 .sidebar h3 {
-  margin-bottom: 15px;
-  font-size: 14px;
+  margin: 0 4px 14px;
+  font-size: 12px;
   color: var(--sidebar-title);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.1px;
   border-bottom: 1px solid var(--sidebar-border);
-  padding-bottom: 5px;
+  padding-bottom: 8px;
 }
 
 .sidebar ul {
@@ -377,7 +425,7 @@ body[data-theme="dark"] .theme-icon-moon {
 }
 
 .sidebar li {
-  margin: 8px 0;
+  margin: 7px 0;
 }
 
 .sidebar a {
@@ -385,20 +433,33 @@ body[data-theme="dark"] .theme-icon-moon {
   color: var(--sidebar-link);
   font-size: 13px;
   font-weight: 600;
-  display: block;
-  padding: 10px 12px;
-  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 11px;
+  border-radius: 10px;
   transition: all 0.2s ease;
   background-color: var(--sidebar-link-bg);
-  border: 1px solid transparent;
+  border: 1px solid var(--sidebar-border);
+}
+
+.sidebar a svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
 }
 
 .sidebar a:hover {
   background: var(--sidebar-link-hover-bg);
   color: #fff;
-  padding-left: 16px;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-  border-color: rgba(96, 165, 250, 0.35);
+  transform: translateX(2px);
+  box-shadow: 0 10px 18px rgba(37, 99, 235, 0.24);
+  border-color: transparent;
 }
 
 .sidebar a:focus-visible {
@@ -410,6 +471,7 @@ body[data-theme="dark"] .theme-icon-moon {
 .content-area {
   flex: 1;
   min-width: 0;
+  padding-right: 10px;
 }
 
 /* BANNER */
@@ -606,7 +668,7 @@ body[data-theme="dark"] .theme-icon-moon {
   }
 
   .navbar {
-    padding: 12px 14px;
+    padding: 10px 12px;
   }
 
   .nav-toggle {
@@ -627,7 +689,7 @@ body[data-theme="dark"] .theme-icon-moon {
     gap: 12px;
     padding: 70px 18px 18px;
     border-right: 1px solid var(--nav-border);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+    box-shadow: 0 12px 30px rgba(2, 8, 23, 0.28);
     transition: left 0.25s ease;
     z-index: 60;
   }
@@ -639,7 +701,8 @@ body[data-theme="dark"] .theme-icon-moon {
   #navbar a {
     width: 100%;
     background: var(--sidebar-link-bg);
-    border-radius: 8px;
+    border: 1px solid var(--sidebar-border);
+    border-radius: 10px;
     padding: 10px 12px;
   }
 
@@ -651,9 +714,10 @@ body[data-theme="dark"] .theme-icon-moon {
     position: static;
     width: 100%;
     min-height: auto;
-    border-right: none;
+    border-right: 1px solid var(--sidebar-border);
     border-bottom: 1px solid var(--sidebar-border);
-    border-radius: 0;
+    border-radius: 12px;
+    margin: 10px 10px 0;
   }
 
   .user-email {
@@ -689,6 +753,8 @@ body[data-theme="dark"] .theme-icon-moon {
   display: flex;
   align-items: center;
   gap: 10px; /* space between login and cart */
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .cart-icon {
@@ -699,7 +765,7 @@ body[data-theme="dark"] .theme-icon-moon {
   border: 1px solid var(--nav-border);
   background: var(--home-chip-bg);
   text-decoration: none;
-  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cart-icon img {
@@ -711,15 +777,16 @@ body[data-theme="dark"] .theme-icon-moon {
 }
 
 .cart-icon img:hover {
-  transform: scale(1.4);
+  transform: scale(1.08);
 }
 .cart-icon {
   position: relative;
 }
 
 .cart-icon:hover {
+  border-color: rgba(37, 99, 235, 0.35);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.2);
   transform: translateY(-1px);
-  border-color: var(--nav-link-hover);
 }
 
 .cart-badge {
@@ -754,14 +821,19 @@ body[data-theme="dark"] .theme-icon-moon {
       </button>
       <a href="{% url 'home' %}" class="logo">MusclePower.ks</a>
     </div>
+    {% url 'home' as home_url %}
+    {% url 'discounts' as discounts_url %}
+    {% url 'contact' as contact_url %}
+    {% url 'create_product' as create_product_url %}
+    {% url 'admin_orders' as admin_orders_url %}
     <ul id='navbar'>
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'discounts' %}">Discounts</a></li>
-        <li><a href="{% url 'contact' %}">Contact</a></li>
+        <li><a href="{{ home_url }}" class="{% if request.path == home_url %}active{% endif %}">Home</a></li>
+        <li><a href="{{ discounts_url }}" class="{% if request.path == discounts_url %}active{% endif %}">Discounts</a></li>
+        <li><a href="{{ contact_url }}" class="{% if request.path == contact_url %}active{% endif %}">Contact</a></li>
         {% if request.session.user %}
         {% if request.session.user.role == 'A' %}
-        <li><a href="{% url 'create_product' %}">Create product</a></li>
-        <li><a href="{% url 'admin_orders' %}">Admin Orders</a></li>
+        <li><a href="{{ create_product_url }}" class="{% if request.path == create_product_url %}active{% endif %}">Create product</a></li>
+        <li><a href="{{ admin_orders_url }}" class="{% if request.path == admin_orders_url %}active{% endif %}">Admin Orders</a></li>
         {% endif %}
         {% endif %}
 
@@ -830,9 +902,26 @@ body[data-theme="dark"] .theme-icon-moon {
   <div class="sidebar">
     <h3>Shop by Category</h3>
     <ul>
-      <li><a href="{% url 'home' %}">All Products</a></li>
+      <li>
+        <a href="{% url 'home' %}">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 10.5 12 3l9 7.5"></path>
+            <path d="M5 9.5V21h14V9.5"></path>
+          </svg>
+          <span>All Products</span>
+        </a>
+      </li>
       {% for category, label in categories %}
-        <li><a href="{% url 'home_with_category' category %}">{{ label }}</a></li>
+        <li>
+          <a href="{% url 'home_with_category' category %}">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7h16"></path>
+              <path d="M7 12h10"></path>
+              <path d="M10 17h4"></path>
+            </svg>
+            <span>{{ label }}</span>
+          </a>
+        </li>
       {% endfor %}
     </ul>
   </div>{% endblock %}
@@ -905,7 +994,7 @@ body[data-theme="dark"] .theme-icon-moon {
        <div class="footer-section">
       <h4>Categories</h4>
       <ul>
-        {% for category, label in categories %}
+        {% for category, label in categories|slice:":4" %}
           <li><a href="{% url 'home_with_category' category %}">{{ label }}</a></li>
         {% endfor %}
       </ul>
