@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -859,7 +860,7 @@ body[data-theme="dark"] .theme-icon-moon {
         </button>
         <span class="user-email">{{ request.session.user.email }}</span>
         <a href="{% url 'users:logout' request.session.user.pk %}" class="btn-login">Logout</a>
-        <a href="{% url 'cart' %}" class="cart-icon"><img src="/media/products/2a.png" alt="Cart">
+        <a href="{% url 'cart' %}" class="cart-icon"><img src="{% static 'products/2a.png' %}" alt="Cart">
             {% if cart_count > 0 %}
                 <span class="cart-badge">{{ cart_count }}</span>
             {% endif %}
@@ -887,7 +888,7 @@ body[data-theme="dark"] .theme-icon-moon {
     </button>
 
     <a href="{% url 'users:login' %}" class="btn-login">Login</a>
-    <a href="{% url 'cart' %}" class="cart-icon"><img src="/media/products/2a.png" alt="Cart">
+    <a href="{% url 'cart' %}" class="cart-icon"><img src="{% static 'products/2a.png' %}" alt="Cart">
             {% if cart_count > 0 %}
                 <span class="cart-badge">{{ cart_count }}</span>
             {% endif %}
@@ -931,7 +932,7 @@ body[data-theme="dark"] .theme-icon-moon {
 
     <!-- BANNER -->{% block banner %}
     <div class="banner">
-      <img src="/media/products/0.png" alt="Banner">
+      <img src="{% static 'products/0.png' %}" alt="Banner">
       <div class="banner-text">
         <h1>Build Your Strength</h1>
         <p>Up to 30% OFF Supplements</p>

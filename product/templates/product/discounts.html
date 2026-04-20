@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} Discounts {% endblock %}
 
 {% block content %}
@@ -235,10 +236,10 @@
 
 <div class="ad-grid">
   <div class="ad-box large">
-    <img src="/media/products/pp.png" alt="Banner" class="ad-img">
+    <img src="{% static 'products/pp.png' %}" alt="Banner" class="ad-img">
   </div>
   <div class="ad-box large">
-    <img src="/media/products/dd.jpg" alt="Banner" class="ad-img">
+    <img src="{% static 'products/dd.jpg' %}" alt="Banner" class="ad-img">
   </div>
 </div>
 

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Goals{% endblock %}
 
 {% block content %}
@@ -66,22 +67,22 @@ h1 {
 <div class="goals-container">
 
     <a href="#" class="goal-card">
-        <img src="/media/products/r.png" alt="Shtim peshe">
+        <img src="{% static 'products/r.png' %}" alt="Shtim peshe">
         <div class="goal-title">Shtim peshe</div>
     </a>
 
     <a href="#" class="goal-card">
-        <img src="/media/products/t.png" alt="Humbje peshe">
+        <img src="{% static 'products/t.png' %}" alt="Humbje peshe">
         <div class="goal-title">Humbje peshe</div>
     </a>
 
     <a href="#" class="goal-card">
-        <img src="/media/products/y.png" alt="Zhvillim performance">
+        <img src="{% static 'products/y.png' %}" alt="Zhvillim performance">
         <div class="goal-title">Zhvillim performance</div>
     </a>
 
     <a href="#" class="goal-card">
-        <img src="/media/products/u.png" alt="Shendet dhe mirqenie">
+        <img src="{% static 'products/u.png' %}" alt="Shendet dhe mirqenie">
         <div class="goal-title">Shendet dhe mirqenie</div>
     </a>
 
