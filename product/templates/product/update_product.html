@@ -265,7 +265,7 @@
           <label for="image">Image</label>
           {% if producti.image %}
             <div class="image-preview">
-              <img src="{{ producti.image.url }}" alt="Current image">
+              <img src="{{ producti.image.url }}" alt="Current image" onerror="this.onerror=null;this.src='/static/products/0.png';">
             </div>
           {% endif %}
           <input type="file" id="image" name="image">

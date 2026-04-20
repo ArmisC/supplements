@@ -383,7 +383,7 @@
               <div class="cart-item-left">
                 {% if entry.item.product.image %}
                   <img
-                    src="{{ entry.item.product.image.url }}"
+                    src="{{ entry.item.product.image.url }}" onerror="this.onerror=null;this.src='/static/products/0.png';"
                     alt="{{ entry.item.product.name }}"
                     class="cart-item-img"
                   >
@@ -454,7 +454,7 @@
           <tr>
             <td>
               {% if entry.item.product.image %}
-                <img src="{{ entry.item.product.image.url }}" alt="{{ entry.item.product.name }}" width="50" height="50">
+                <img src="{{ entry.item.product.image.url }}" alt="{{ entry.item.product.name }}" width="50" height="50" onerror="this.onerror=null;this.src='/static/products/0.png';">
               {% else %}
                 <img src="https://via.placeholder.com/50" alt="{{ entry.item.product.name }}">
               {% endif %}
@@ -488,7 +488,7 @@
         <div class="cart-card">
           <div class="cart-card-top">
             {% if entry.item.product.image %}
-              <img src="{{ entry.item.product.image.url }}" alt="{{ entry.item.product.name }}">
+              <img src="{{ entry.item.product.image.url }}" alt="{{ entry.item.product.name }}" onerror="this.onerror=null;this.src='/static/products/0.png';">
             {% else %}
               <img src="https://via.placeholder.com/50" alt="{{ entry.item.product.name }}">
             {% endif %}

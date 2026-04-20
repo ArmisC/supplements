@@ -372,7 +372,7 @@
               {% endif %}
 
               {% if product.image %}
-                <img src="{{ product.image.url }}" class="product-img" alt="{{ product.name }}">
+                <img src="{{ product.image.url }}" class="product-img" alt="{{ product.name }}" onerror="this.onerror=null;this.src='/static/products/0.png';">
               {% else %}
                 <img src="https://via.placeholder.com/300x300" class="product-img" alt="{{ product.name }}">
               {% endif %}
