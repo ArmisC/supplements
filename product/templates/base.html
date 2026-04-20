@@ -482,12 +482,31 @@ body[data-theme="dark"] .theme-icon-moon {
   margin: 20px;
   border-radius: 12px;
   overflow: hidden;
+  background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 55%, #38bdf8 100%);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.28);
 }
 
-.banner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.banner::before,
+.banner::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.banner::before {
+  width: 260px;
+  height: 260px;
+  right: -80px;
+  top: -100px;
+}
+
+.banner::after {
+  width: 180px;
+  height: 180px;
+  right: 140px;
+  bottom: -90px;
 }
 
 .banner-text {
@@ -958,7 +977,6 @@ body[data-theme="dark"] .theme-icon-moon {
 
     <!-- BANNER -->{% block banner %}
     <div class="banner">
-      <img src="{% static 'products/0.png' %}" alt="Banner">
       <div class="banner-text">
         <h1>Build Your Strength</h1>
         <p>Up to 30% OFF Supplements</p>
